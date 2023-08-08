@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const apiClient = axios.create({
-  baseURL: "http://apollo-lb-220895166.ap-northeast-2.elb.amazonaws.com/",
+  baseURL: process.env.REACT_APP_SERVER_HOST,
 });

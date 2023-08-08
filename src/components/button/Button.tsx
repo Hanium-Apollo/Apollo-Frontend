@@ -9,10 +9,10 @@ function Button(props: any) {
     else if (props.text === "back") return "이전으로";
   };
   const goTo = () => {
-    const value = props.value;
+    const value = props.state;
     if (props.text === "home") navigate("/");
     else if (props.text === "monitor")
-      navigate("/monitor", { state: { value } });
+      navigate("/monitor", { state: { repoName: value } });
     else if (props.text === "back") navigate(-1);
   };
   return (

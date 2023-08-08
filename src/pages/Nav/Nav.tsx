@@ -2,16 +2,22 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../../assets/images/logoname.png";
 import "../../assets/css/Nav.css";
-import { handleLogout } from "../MainPage/components/LoginButton";
 import { UserInfo } from "../../apis/UserServiceType";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
   let info = localStorage.getItem("userInfo");
-  let parsedInfo = info ? JSON.parse(info) as UserInfo : null;
+  let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+  let accessToken = localStorage.getItem("token");
   let userLogin = parsedInfo?.login;
   let profile = parsedInfo?.avatar_url;
+  const HandleLogout = () => {
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
   const GotoMain = () => {
     navigate("/"); // Navigate to another route
   };
@@ -35,9 +41,13 @@ const Nav = () => {
         <img src={logo} className="navbar_logo" alt="logo" />
       </Link>
       <div className="dropdown">
-        {userLogin && (
+        {accessToken && (
           <>
-            <img src = {profile} alt="profile" style={{height: "100%", borderRadius: "50%"}}/>
+            <img
+              src={profile}
+              alt="profile"
+              style={{ height: "100%", borderRadius: "50%" }}
+            />
             <button className="dropdown-toggle" onClick={toggleDropdown}>
               {userLogin}
             </button>
@@ -76,7 +86,7 @@ const Nav = () => {
             </li>
             <li
               className="menu"
-              onClick={() => handleLogout()}
+              onClick={() => HandleLogout()}
               style={{ cursor: "pointer" }}
             >
               Logout
@@ -86,6 +96,6 @@ const Nav = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Nav;

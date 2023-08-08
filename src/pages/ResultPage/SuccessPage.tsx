@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 function Success() {
   const location = useLocation();
-  const value = location.state?.value;
+  const repoName = location.state?.repoName;
   return (
     <div className="result">
       <img src={logo} className="logo" alt="logo" />
@@ -15,7 +15,7 @@ function Success() {
       <p className="check">모니터링 페이지에서 배포 현황을 확인하세요</p>
       <div>
         <Button css={"shomebtn"} text={"home"} />
-        <Button css={"smonitorbtn"} text={"monitor"} value={value} />
+        <Button css={"smonitorbtn"} text={"monitor"} state={repoName} />
       </div>
     </div>
   );

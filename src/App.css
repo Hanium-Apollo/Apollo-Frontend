@@ -3,7 +3,13 @@
 }
 body {
   margin: 0;
+  overflow-x: hidden;
+  overflow: auto;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
 }
-:root{
+body::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+:root {
   background-color: #333333;
 }

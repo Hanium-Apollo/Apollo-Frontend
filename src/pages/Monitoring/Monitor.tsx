@@ -7,10 +7,10 @@ import { Container, Grid } from "@mui/material";
 import { useLocation } from "react-router-dom";
 function Monitor() {
   const location = useLocation();
-  const value = location.state?.value;
+  const repoName = location.state?.repoName;
   return (
     <div className="monitor">
-      <div className="text-block">{value}</div>
+      <div className="text-block">{repoName}</div>
       <div className="chart">
         <Container>
           <Grid container spacing={2}>

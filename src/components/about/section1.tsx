@@ -6,22 +6,11 @@ import { Section1Inner } from "./section1Inner";
 
 const SectionContainer = styled(Grid)`
   display: flex;
-  position: relative;
   flex-direction: column;
-  background-color: #424242;
+  background-color: #151515;
   z-index: 1;
   padding: 50px 0 50px 0;
-  transform: translateY(-10%);
   width: 100vw;
-
-  @media (max-width: 768px) {
-    margin: 20px 20px 20px 20px;
-  }
-
-  @media (max-width: 1280px) {
-    margin: 20px 30px 30px 30px;
-  }
-
 `;
 
 const TextContainer = styled(Grid)`
@@ -38,29 +27,30 @@ const InnerContainer = styled.div`
   justify-content: center;
   align-items: center;
   white-space: nowrap;
-  width: 100%;
 `;
 
 const Text = styled.div`
-  font-size: 180px;
+  font-size: 200px;
   color: lightgray;
   letter-spacing: 4.8px;
   margin: 15px 0;
   @font-face {
     font-family: "AppleBold";
-    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoEB.ttf") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoEB.ttf")
+      format("truetype");
   }
   font-family: "AppleBold";
 
   span.highlight {
-    color: #f3f781;
-  }
-  @media (max-width: 768px) {
-    font-size: 6vw;
+    color: #4cbccc;
   }
 
-  @media (max-width: 1280px) {
-    font-size: 9vw;
+  @media (max-width: 600px) {
+    font-size: 40px;
+  }
+
+  @media (max-width: 1500px) {
+    font-size: 120px;
   }
 `;
 
@@ -71,16 +61,17 @@ const InnerText = styled.div`
   padding: 12px 0;
   @font-face {
     font-family: "Apple";
-    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoB.ttf") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoB.ttf")
+      format("truetype");
   }
   font-family: "Apple";
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     font-size: 0.8vw;
     padding: 10px 0;
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1500px) {
     font-size: 2.5vw;
   }
 `;
@@ -92,11 +83,11 @@ const SubTitle = styled.div`
   font-family: "Apple";
   font-weight: bold;
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     font-size: 3vw;
   }
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1500px) {
     font-size: 4vw;
   }
 `;

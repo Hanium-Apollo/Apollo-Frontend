@@ -9,7 +9,7 @@ interface Section1Props {
 }
 
 const buttonStyles = css`
-  background-color: #585858;
+  background-color: #1c1c1c;
   padding: 20px 20px;
   color: white;
   font-weight: bold;
@@ -22,7 +22,8 @@ const buttonStyles = css`
 
   @font-face {
     font-family: "AppleBold";
-    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoB.ttf") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoB.ttf")
+      format("truetype");
   }
   font-family: "AppleBold";
 
@@ -34,9 +35,11 @@ const buttonStyles = css`
     font-size: 1.3vw;
   }
 `;
+
 const StyledButton = styled(MaterialButton)`
   ${buttonStyles}
 `;
+
 const SectionContainer = styled(Grid)`
   display: flex;
   position: relative;
@@ -65,6 +68,7 @@ const TextContainer = styled(Grid)`
 
 export const Section1Inner: React.FC<Section1Props> = ({ children }) => {
   const navigate = useNavigate();
+
   return (
     <SectionContainer container>
       <TextContainer item xs={12}>

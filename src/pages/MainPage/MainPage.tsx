@@ -8,8 +8,10 @@ import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import NumberList from "./components/RepoList";
-import { UserInfo } from "../../apis/UserServiceType";
 import { getRepoListService } from "../../apis/RepoService";
+import { Signup } from "./components/Signup";
+import { getAuthenticationService } from "../../apis/UserService";
+import { UserInfo } from "../../apis/UserServiceType";
 
 const buttonStyles = css`
   background-color: gray;
@@ -35,16 +37,42 @@ const buttonStyles = css`
 const StyledButton = styled(MaterialButton)`
   ${buttonStyles}
 `;
-
 const Main = () => {
   const navigate = useNavigate();
   const [repoData, setRepoData] = useState([]);
-  let info = localStorage.getItem("userInfo");
-  let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
-  let userLogin = parsedInfo?.login;
+  const accessToken = localStorage.getItem("token");
+  console.log(accessToken);
+  const handleCallback = useCallback(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    if (code && localStorage.getItem("action")) {
+      console.log(code);
+      getAuthenticationService(code)
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("userInfo", JSON.stringify(res.data));
+          navigate("/wait");
+        })
+        .catch((err) => {
+          console.log("here");
+          console.log(err);
+        });
+    } else {
+      console.log("Error: code not found");
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    handleCallback();
+  }, [handleCallback]);
 
   const getRepo = useCallback(() => {
-    if (userLogin) {
+    let info = localStorage.getItem("userInfo");
+    let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+    let accessToken = localStorage.getItem("token");
+    if (!parsedInfo) return;
+    let userLogin = parsedInfo.login;
+    if (accessToken && userLogin) {
       getRepoListService(userLogin)
         .then((response) => {
           console.log(response.data);
@@ -54,7 +82,7 @@ const Main = () => {
           console.error("Error fetching data:", error);
         });
     }
-  }, [userLogin]);
+  }, []);
 
   useEffect(() => {
     getRepo();
@@ -63,7 +91,7 @@ const Main = () => {
   return (
     <div className="main">
       <img src={logoname} className="logoname" alt="logoname" />
-      {userLogin ? (
+      {accessToken ? (
         <>
           <StyledButton
             variant="contained"
@@ -75,8 +103,16 @@ const Main = () => {
           {repoData !== null && <NumberList repo={repoData} />}
         </>
       ) : (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <LoginButton />
+          <Signup />
         </div>
       )}
     </div>

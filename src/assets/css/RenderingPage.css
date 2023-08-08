@@ -1,15 +1,15 @@
 @font-face {
-  font-family: 'Inter';
-  src: url(../fonts/Inter-Regular.ttf) format('truetype');
+  font-family: "Inter";
+  src: url(../fonts/Inter-Regular.ttf) format("truetype");
 }
 
 .rmessage {
-    font-size: 4vw;
-    font-weight: Bold;
-    margin-top: 15%;
-    color: white;
-    font-family: Inter;
-    background-color: rgba(255, 255, 255, 0);
+  font-size: 4vw;
+  font-weight: Bold;
+  margin-top: 15%;
+  color: white;
+  font-family: Inter;
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .loading-container {
@@ -20,25 +20,24 @@
   left: 50%;
   transform: translate(-50%);
   align-items: center;
+}
+
+.moving-image {
+  width: 150px;
+  height: 150px;
+  z-index: 1;
+  background-image: url("../../assets/images/logo.png");
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  animation: moveImage 3s linear infinite;
+}
+
+@keyframes moveImage {
+  0% {
+    left: -100%;
   }
-  
-  .moving-image {
-    width: 150px;
-    height: 150px;
-    z-index: 1;
-    background-image: url("../../assets/images/logo.png");
-    background-size: cover;
-    position: absolute;
-    top: 50%;
-    animation: moveImage 3s linear infinite;
+  100% {
+    left: calc(100% - 10%);
   }
-  
-  @keyframes moveImage {
-    0% {
-      left: -100%;
-    }
-    100% {
-      left: calc(100% - 10%);
-    }
-  }
-  
+}

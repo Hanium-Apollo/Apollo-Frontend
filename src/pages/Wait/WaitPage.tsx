@@ -1,53 +1,128 @@
 import { useNavigate } from "react-router-dom";
-import React from "react";
-import { Button } from "@mui/material";
-import { UserInfo } from "../../apis/UserServiceType";
 import {
   getUserSignInService,
   getUserSignUpService,
 } from "../../apis/UserService";
+import { useCallback, useEffect, useState } from "react";
+import FadeLoader from "react-spinners/FadeLoader";
+import { apiClient } from "../../apis/ApiClient";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import styled from "@emotion/styled";
+import { UserInfo } from "../../apis/UserServiceType";
 
-interface WaitProps {
-  userInfo?: Partial<UserInfo>;
-}
+export const StyledToastContainer = styled(ToastContainer)`
+  .Toastify__toast {
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    font-size: 30px;
+    display: inline-block;
+    padding: 20px 40px 20px 40px;
+    white-space: nowrap;
+  }
+`;
 
-const Wait: React.FC<WaitProps> = ({ userInfo }) => {
+const Wait = () => {
   const navigate = useNavigate();
+  const action = localStorage.getItem("action");
+  const [isFinish, SetFinish] = useState("");
+  const [parsedInfo, SetParsedInfo] = useState<UserInfo | null>(null);
 
-  const handleButtonClick = (action: string) => {
-    let info = localStorage.getItem("userInfo");
-    if (!info) return;
-    let parsedInfo = JSON.parse(info) as UserInfo;
-    let userLogin = parsedInfo.login;
-    let userId = parsedInfo.id;
-    if (action === "userSignUp") {
-      if (parsedInfo) parsedInfo.id = parsedInfo.id.toString();
+  useEffect(() => {
+    const info = localStorage.getItem("userInfo");
+    const infoParsed = info ? (JSON.parse(info) as UserInfo) : null;
+
+    SetParsedInfo(infoParsed);
+  }, []);
+
+  const handleLogin = useCallback(() => {
+    if (action === "userSignUp" && parsedInfo) {
       getUserSignUpService(parsedInfo)
         .then((response) => {
           console.log("success");
           console.log(response);
+          localStorage.removeItem("action");
+          localStorage.removeItem("userInfo");
+          SetFinish("signup");
+          return "success";
         })
         .catch((error) => {
           console.log("error: ", error);
+          alert("에러가 발생했습니다: " + error.response);
+          navigate("/");
         });
-    } else if (action === "userSignIn") {
-      getUserSignInService(userLogin, userId)
+    } else if (action === "userSignIn" && parsedInfo) {
+      getUserSignInService(parsedInfo.login, parsedInfo.id)
         .then((response) => {
           console.log("success");
           console.log(response);
-          navigate("/");
+          apiClient.defaults.headers.common[
+            "auth"
+          ] = `Bearer ${response.data.result.accessToken}`;
+          localStorage.removeItem("action");
+          localStorage.setItem(
+            "token",
+            JSON.stringify(response.data.result.accessToken)
+          );
+          SetFinish("signin");
+          return response.data;
         })
         .catch((error) => {
-          console.log("error: ", error);
+          console.log(error.response.data);
+          alert("에러가 발생했습니다: " + error.response);
+          navigate("/");
+          return error;
         });
     }
-  };
+  }, [action, parsedInfo, navigate]);
+
+  useEffect(() => {
+    const notify = (message: string) =>
+      toast(message, {
+        onClose: () => navigate("/"),
+      });
+    handleLogin();
+    if (isFinish === "signup") {
+      navigate("/register", {
+        state: { userId: parsedInfo?.id },
+      });
+    } else if (isFinish === "signin") {
+      notify("로그인이 완료되었습니다.");
+    }
+  }, [handleLogin, isFinish, navigate, parsedInfo]);
 
   return (
-    <div>
-      <Button onClick={() => handleButtonClick("userSignIn")}>로그인</Button>
-      <Button onClick={() => handleButtonClick("userSignUp")}>회원가입</Button>
-    </div>
+    <>
+      <StyledToastContainer
+        position="top-center"
+        limit={1}
+        closeOnClick
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+        closeButton={false}
+      />
+      <div className="contentWrap">
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <FadeLoader
+            color="white"
+            height={15}
+            width={5}
+            radius={2}
+            margin={2}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 

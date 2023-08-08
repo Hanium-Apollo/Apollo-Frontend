@@ -5,20 +5,15 @@ import wallpaper from "../../assets/images/wallpaperf.jpg";
 
 const SectionContainer = styled(Grid)`
   display: flex;
-  position: relative;
   background-image: url(${wallpaper});
   z-index: 1;
   justify-content: center;
   align-items: center;
   padding: 50px 0 30px 0;
   width: 100vw;
+  height: 100vh;
   text-align: center;
-  height: 110vh;
-  max-width: 2560px;
-
-  @media (max-width: 768px) {
-    height: 100vh;
-  }
+  max-width: 1440px;
 `;
 
 const Text = styled.div`
@@ -27,35 +22,27 @@ const Text = styled.div`
   font-weight: 700;
   line-height: 1.8;
   letter-spacing: -1px;
+  font-size: 100px;
 
   @font-face {
     font-family: "AppleBold";
-    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoB.ttf") format("truetype");
+    src: url("https://cdn.jsdelivr.net/gh/cho1n/Apollo-Frontend@latest/src/assets/fonts/AppleSDGothicNeoB.ttf")
+      format("truetype");
   }
 
   font-family: "AppleBold";
 
   span.highlight {
-    color: #f3f781;
+    color: #4cbccc;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     font-size: 15px;
   }
 
-  @media (max-width: 1280px) {
-    font-size: 50px;
+  @media (max-width: 1500px) {
+    font-size: 60px;
   }
-
-  @media (max-width: 1920px) {
-    font-size: 80px;
-  }
-
-  @media (max-width: 2560px) {
-    font-size: 95px;
-  }
-
-
 `;
 
 const Scroll = styled.div`
