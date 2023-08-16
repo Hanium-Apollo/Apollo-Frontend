@@ -7,33 +7,42 @@ export interface Credentials {
   AWSSecretKey: string;
   GithubOAuthToken: string;
 }
-export const getAuthenticationService = (code: String) => {
+export const postAuthenticationService = (code: String) => {
   return apiClient.post(`/api/authenticate`, {}, { params: { code } });
 };
 
-export const getUserSignUpService = (parsedInfo: UserInfo) => {
+export const postUserSignUpService = (parsedInfo: UserInfo) => {
   return apiClient.post(`/api/save/user`, JSON.stringify(parsedInfo), {
     headers: { "Content-Type": "application/json" },
   });
 };
 
-export const getUserSignInService = (userLogin: String, userId: String) => {
+export const postUserSignInService = (userLogin: String, userId: String) => {
   return apiClient.post(
     `/api/login/user`,
     {
       userLogin: userLogin,
       userId: userId,
     },
-    { withCredentials: true }
+    { withCredentials: true, headers: { "Content-Type": "application/json" } }
   );
 };
 
-export const getCredential = (userId: String, credentials: Credentials) => {
+export const postCredential = (userId: String, credentials: Credentials) => {
   return apiClient.post(
     `/api/credential/${userId}`,
     JSON.stringify(credentials),
-    {
-      headers: { "Content-Type": "application/json" },
-    }
+    { withCredentials: true, headers: { "Content-Type": "application/json" } }
   );
+};
+
+export const getCredentials = (userId: String) => {
+  return apiClient.get(`/api/credential/${userId}`, {});
+};
+
+export const patchCredentials = (userId: String, credentials: Credentials) => {
+  return apiClient.patch(`/api/credential/${userId}`, credentials, {
+    withCredentials: true,
+    headers: { "Content-Type": "application/json" },
+  });
 };

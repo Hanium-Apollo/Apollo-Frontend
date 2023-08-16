@@ -3,7 +3,7 @@ import "../../../assets/css/button.css";
 
 const LoginButton = () => {
   const handleLogin = () => {
-    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=aaf4ee42ea6e3043265c`;
+    const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=7600733c0c5ed7849ce6`;
     window.location.href = githubAuthUrl;
     localStorage.setItem("action", "userSignIn");
   };

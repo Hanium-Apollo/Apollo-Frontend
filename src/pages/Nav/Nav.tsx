@@ -3,19 +3,22 @@ import { useNavigate, Link } from "react-router-dom";
 import logo from "../../assets/images/logoname.png";
 import "../../assets/css/Nav.css";
 import { UserInfo } from "../../apis/UserServiceType";
+import { useCookies } from "react-cookie";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [cookie, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
   let info = localStorage.getItem("userInfo");
   let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
-  let accessToken = localStorage.getItem("token");
+  let accessToken = cookie.token;
   let userLogin = parsedInfo?.login;
   let profile = parsedInfo?.avatar_url;
   const HandleLogout = () => {
     localStorage.removeItem("userInfo");
-    localStorage.removeItem("token");
+    removeCookie("token");
+
     window.location.href = "/";
   };
   const GotoMain = () => {
@@ -30,6 +33,9 @@ const Nav = () => {
   };
   const GotoDeployList = () => {
     navigate("/deploy");
+  };
+  const GotoMyPage = () => {
+    navigate("/mypage");
   };
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -83,6 +89,13 @@ const Nav = () => {
               style={{ cursor: "pointer" }}
             >
               DeployList
+            </li>
+            <li
+              className="menu"
+              onClick={GotoMyPage}
+              style={{ cursor: "pointer" }}
+            >
+              My Page
             </li>
             <li
               className="menu"

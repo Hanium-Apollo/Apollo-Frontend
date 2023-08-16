@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
-  getUserSignInService,
-  getUserSignUpService,
+  postUserSignInService,
+  postUserSignUpService,
 } from "../../apis/UserService";
 import { useCallback, useEffect, useState } from "react";
 import FadeLoader from "react-spinners/FadeLoader";
@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "@emotion/styled";
 import { UserInfo } from "../../apis/UserServiceType";
+import { useCookies } from "react-cookie";
 
 export const StyledToastContainer = styled(ToastContainer)`
   .Toastify__toast {
@@ -29,6 +30,7 @@ const Wait = () => {
   const action = localStorage.getItem("action");
   const [isFinish, SetFinish] = useState("");
   const [parsedInfo, SetParsedInfo] = useState<UserInfo | null>(null);
+  const [cookies, setCookie] = useCookies(["token"]); // cookies와 setCookie 추가
 
   useEffect(() => {
     const info = localStorage.getItem("userInfo");
@@ -39,7 +41,7 @@ const Wait = () => {
 
   const handleLogin = useCallback(() => {
     if (action === "userSignUp" && parsedInfo) {
-      getUserSignUpService(parsedInfo)
+      postUserSignUpService(parsedInfo)
         .then((response) => {
           console.log("success");
           console.log(response);
@@ -54,18 +56,18 @@ const Wait = () => {
           navigate("/");
         });
     } else if (action === "userSignIn" && parsedInfo) {
-      getUserSignInService(parsedInfo.login, parsedInfo.id)
+      postUserSignInService(parsedInfo.login, parsedInfo.id)
         .then((response) => {
           console.log("success");
           console.log(response);
           apiClient.defaults.headers.common[
             "auth"
           ] = `Bearer ${response.data.result.accessToken}`;
+          setCookie("token", response.data.result.accessToken, {
+            path: "/",
+            expires: new Date(Date.now() + 3 * 60 * 60 * 1000),
+          });
           localStorage.removeItem("action");
-          localStorage.setItem(
-            "token",
-            JSON.stringify(response.data.result.accessToken)
-          );
           SetFinish("signin");
           return response.data;
         })
@@ -76,13 +78,12 @@ const Wait = () => {
           return error;
         });
     }
-  }, [action, parsedInfo, navigate]);
-
+  }, [action, parsedInfo, navigate, setCookie]);
+  const notify = (message: string) =>
+    toast(message, {
+      onClose: () => navigate("/"),
+    });
   useEffect(() => {
-    const notify = (message: string) =>
-      toast(message, {
-        onClose: () => navigate("/"),
-      });
     handleLogin();
     if (isFinish === "signup") {
       navigate("/register", {

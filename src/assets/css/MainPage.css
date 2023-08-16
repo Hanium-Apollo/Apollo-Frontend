@@ -29,7 +29,7 @@
   left: 50%;
   transform: translate(-50%);
   width: 50vw;
-  max-height: 300px;
+  max-height: 500px;
   overflow: auto;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
 }
@@ -86,22 +86,4 @@
 }
 .signup:hover {
   font-weight: bold;
-}
-
-.deploybtn1,
-.deploybtn2 {
-  width: 10%;
-  height: 40px;
-  background-color: gray;
-  opacity: 1;
-  color: white;
-  font-family: ONE-Mobile-Bold;
-  font-size: 1vw;
-  text-align: center;
-  border: none;
-  overflow: hidden;
-}
-.deploybtn2 {
-  border-top-right-radius: 1000px;
-  border-bottom-right-radius: 1000px;
 }

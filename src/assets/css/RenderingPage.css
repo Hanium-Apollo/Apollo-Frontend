@@ -2,42 +2,21 @@
   font-family: "Inter";
   src: url(../fonts/Inter-Regular.ttf) format("truetype");
 }
-
+.loading-container {
+  max-width: 1280px;
+  min-height: 750px;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%);
+}
 .rmessage {
-  font-size: 4vw;
+  font-size: 60px;
   font-weight: Bold;
   margin-top: 15%;
   color: white;
   font-family: Inter;
   background-color: rgba(255, 255, 255, 0);
-}
-
-.loading-container {
-  max-width: 1280px;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  align-items: center;
-}
-
-.moving-image {
-  width: 150px;
-  height: 150px;
-  z-index: 1;
-  background-image: url("../../assets/images/logo.png");
-  background-size: cover;
-  position: absolute;
-  top: 50%;
-  animation: moveImage 3s linear infinite;
-}
-
-@keyframes moveImage {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: calc(100% - 10%);
-  }
 }

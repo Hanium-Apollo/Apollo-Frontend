@@ -13,25 +13,28 @@ function Rendering() {
   const state = location.state;
   const repoName = state?.repoName;
   const type = state?.type;
+  const info = localStorage.getItem("userInfo");
+  const userInfo = info ? JSON.parse(info) : null;
+  const userId = userInfo.id;
   const startDeploy = useCallback(() => {
     if (repoName && type) {
       console.log("repoName: ", repoName, "is ", type);
       if (type === "client") {
-        clientRepoCreateService(repoName)
+        clientRepoCreateService(userId, repoName)
           .then((response) => {
             console.log("success");
             console.log(response);
-            navigate("/success", { state: { repoName } });
+            navigate("/deploy");
           })
           .catch((error) => {
             console.log("error: ", error);
           });
       } else if (type === "server") {
-        serverRepoCreateService(repoName)
+        serverRepoCreateService(userId, repoName)
           .then((response) => {
             console.log("success");
             console.log(response);
-            navigate("/success", { state: { repoName } });
+            navigate("/deploy");
           })
           .catch((error) => {
             console.log("error: ", error);
@@ -46,9 +49,9 @@ function Rendering() {
   return (
     <div className="loading-container">
       <p className="rmessage">WAIT A MINUTE !</p>
-      {/* <div className="moving-image"></div> */}
       <div
         style={{
+          marginTop: "10%",
           position: "fixed",
           top: "50%",
           left: "50%",

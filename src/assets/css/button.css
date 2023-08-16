@@ -32,28 +32,6 @@
   }
 }
 
-.shomebtn,
-.smonitorbtn {
-  margin-top: 5%;
-  width: 15%;
-  height: 55px;
-  background-color: gray;
-  opacity: 1;
-  color: white;
-  font-family: ONE-Mobile-Bold;
-  font-size: 1.7vw;
-  text-align: center;
-  border-radius: 1000px;
-  border: none;
-  overflow: hidden;
-  @media (max-width: 600px) {
-    width: 20%;
-    margin-top: 10%;
-    font-size: 2.5vw;
-    height: 40px;
-  }
-}
-
 .mhomebtn,
 .mbackbtn {
   width: 15%;
@@ -75,17 +53,13 @@
     height: 40px;
   }
 }
-.smonitorbtn,
 .mbackbtn {
   margin-left: 2%;
 }
-.mhomebtn,
-.shomebtn {
+.mhomebtn {
   margin-right: 2%;
 }
 .fhomebtn:hover,
-.shomebtn:hover,
-.smonitorbtn:hover,
 .mbackbtn:hover,
 .mhomebtn:hover {
   background-color: black;
@@ -129,4 +103,45 @@
     width: 30px;
     margin-right: 10px;
   }
+}
+
+.selectbtn {
+  width: 14%;
+  height: 40px;
+  background-color: gray;
+  opacity: 1;
+  color: white;
+  font-family: ONE-Mobile-Bold;
+  font-size: 1vw;
+  text-align: center;
+  border: none;
+  overflow: hidden;
+  border-top-right-radius: 1000px;
+  border-bottom-right-radius: 1000px;
+}
+.selectbtn:hover {
+  background-color: black;
+}
+
+.deploybtn1,
+.deploybtn2 {
+  width: 10%;
+  height: 40px;
+  background-color: gray;
+  opacity: 1;
+  color: white;
+  font-family: ONE-Mobile-Bold;
+  font-size: 1vw;
+  text-align: center;
+  border: none;
+  overflow: hidden;
+}
+.deploybtn2 {
+  border-top-right-radius: 1000px;
+  border-bottom-right-radius: 1000px;
+}
+
+.deploybtn1:hover,
+.deploybtn2:hover {
+  background-color: black;
 }
