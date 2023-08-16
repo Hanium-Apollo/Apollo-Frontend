@@ -41,7 +41,7 @@ function Rendering() {
           });
       }
     }
-  }, [repoName, type, navigate]);
+  }, [userId, repoName, type, navigate]);
   useEffect(() => {
     startDeploy();
   }, [startDeploy]);

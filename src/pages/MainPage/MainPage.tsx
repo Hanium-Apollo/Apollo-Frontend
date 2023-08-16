@@ -23,7 +23,7 @@ const buttonStyles = css`
   text-align: center;
   font-weight: bold;
   top: 63.2%;
-  right: 5%;
+  right: -8%;
   weight: 19vw;
   height: 5vh;
 
