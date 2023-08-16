@@ -30,6 +30,7 @@ const Wait = () => {
   const action = localStorage.getItem("action");
   const [isFinish, SetFinish] = useState("");
   const [parsedInfo, SetParsedInfo] = useState<UserInfo | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookies, setCookie] = useCookies(["token"]); // cookies와 setCookie 추가
 
   useEffect(() => {
@@ -79,11 +80,11 @@ const Wait = () => {
         });
     }
   }, [action, parsedInfo, navigate, setCookie]);
-  const notify = (message: string) =>
-    toast(message, {
-      onClose: () => navigate("/"),
-    });
   useEffect(() => {
+    const notify = (message: string) =>
+      toast(message, {
+        onClose: () => navigate("/"),
+      });
     handleLogin();
     if (isFinish === "signup") {
       navigate("/register", {

@@ -10,7 +10,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import styled from "@emotion/styled";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Credentials, postCredential } from "../../apis/UserService";
-import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { StyledToastContainer } from "../Wait/WaitPage";
 import Visibility from "@mui/icons-material/Visibility";
@@ -39,8 +38,6 @@ export const Register = () => {
 
   const [secretKey, setSecretKey] = useState<string>("");
   const [githubOAuthToken, setGithubOAuthToken] = useState<string>("");
-
-  const [cookies] = useCookies(["token"]);
 
   const [showPassword, setShowPassword] = React.useState(false);
   const [showToken, setShowToken] = React.useState(false);

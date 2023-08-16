@@ -7,6 +7,7 @@ import { useCookies } from "react-cookie";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies(["token"]);
   const navigate = useNavigate();
 
