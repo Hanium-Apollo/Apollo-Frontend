@@ -9,7 +9,11 @@ import NightSky from "./pages/MainPage/NightSky";
 import Rendering from "./pages/RenderingPage/RenderingPage";
 import Wait from "./pages/Wait/WaitPage";
 import DeployList from "./pages/DeployListPage/DeployList";
+import { Board } from "./pages/Borad/BoardPage";
+import { Write } from "./components/Board/Write";
 import { MyPage } from "./pages/MyPage";
+import { BoardDetail } from "./pages/Borad/PostPage";
+import { Edit } from "./pages/Borad/EditPage";
 
 function App() {
   return (
@@ -25,6 +29,10 @@ function App() {
           <Route path="deploy" element={<DeployList />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/mypage" element={<MyPage />}></Route>
+          <Route path="/board" element={<Board />}></Route>
+          <Route path="/board/id" element={<BoardDetail />}></Route>
+          <Route path="/board/write" element={<Write />}></Route>
+          <Route path="/board/:id/edit" element={<Edit />}></Route>
         </Routes>
         <NightSky />
       </BrowserRouter>

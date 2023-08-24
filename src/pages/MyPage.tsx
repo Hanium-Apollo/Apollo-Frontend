@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { Grid, Button } from "@mui/material";
 import { UserInfo } from "../apis/UserServiceType";
@@ -62,28 +61,43 @@ const TextBox = styled(Grid)`
   justify-content: center;
   font-size: 20px;
 `;
+const EditLine = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+`;
+const EditName = styled.div`
+  flex: 1;
+  height: 100%;
+  text-align: end;
+`;
+const EditInput = styled.div`
+  flex: 1;
+  height: 100%;
+  text-align: start;
+  margin-left: 5px;
+`;
 
 export const MyPage = () => {
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [accountId, setAccountId] = useState<string>("");
   const [accessKey, setAccessKey] = useState<string>("");
   const [secretKey, setSecretKey] = useState<string>("");
   const [region, setRegion] = useState<string>("");
   const [githubToken, setGithubToken] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
+  const accountIdRef = useRef<HTMLInputElement | null>(null);
+  const accessKeyRef = useRef<HTMLInputElement | null>(null);
+  const secretKeyRef = useRef<HTMLInputElement | null>(null);
+  const regionRef = useRef<HTMLInputElement | null>(null);
+  const githubTokenRef = useRef<HTMLInputElement | null>(null);
 
-  const location = useLocation();
-  const userId = location.state?.userId as string;
-
+  let info = localStorage.getItem("userInfo");
+  const parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+  const userId = parsedInfo?.id;
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const info = localStorage.getItem("userInfo");
-        const parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
-        setUserInfo(parsedInfo);
-
-        if (parsedInfo) {
-          let userId = parsedInfo.id;
+        if (userId) {
           const response = await getCredentials(userId);
           const credentials = response.data;
 
@@ -93,8 +107,6 @@ export const MyPage = () => {
             setSecretKey(credentials.AWSSecretKey);
             setRegion(credentials.AWSRegion);
             setGithubToken(credentials.GithubOAuthToken);
-
-            setUserInfo((prevInfo) => ({ ...prevInfo, ...credentials }));
           }
         }
       } catch (error) {
@@ -105,28 +117,38 @@ export const MyPage = () => {
     fetchUserInfo();
   }, [userId]);
 
-  const profile = userInfo?.avatar_url;
-  const name = userInfo?.login;
+  const profile = parsedInfo?.avatar_url;
+  const name = parsedInfo?.login;
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    setIsEditing(!isEditing);
   };
 
   const handleSaveClick = async () => {
     try {
       const updatedCredentials = {
-        AWSAccountId: accountId,
-        AWSAccessKey: accessKey,
-        AWSSecretKey: secretKey,
-        AWSRegion: region,
-        GithubOAuthToken: githubToken,
+        AWSAccountId: accountIdRef.current
+          ? accountIdRef.current.value
+          : accountId,
+        AWSAccessKey: accessKeyRef.current
+          ? accessKeyRef.current.value
+          : accessKey,
+        AWSSecretKey: secretKeyRef.current
+          ? secretKeyRef.current.value
+          : secretKey,
+        AWSRegion: regionRef.current ? regionRef.current.value : region,
+        GithubOAuthToken: githubTokenRef.current
+          ? githubTokenRef.current.value
+          : githubToken,
       };
+      console.log(updatedCredentials.AWSRegion);
+      if (userId) {
+        await patchCredentials(userId, updatedCredentials);
 
-      await patchCredentials(userId, updatedCredentials);
+        console.log("Credentials updated successfully");
 
-      console.log("Credentials updated successfully");
-
-      setIsEditing(false);
+        setIsEditing(false);
+      }
     } catch (error) {
       console.error("Error updating credentials:", error);
     }
@@ -142,72 +164,104 @@ export const MyPage = () => {
         <TextBox>{name}님 반갑습니다.</TextBox>
         <TextBox>아래는 입력하신 Cred 정보입니다.</TextBox>
         <CredentialsBox>
-          <div>
-            AWS Account ID:{" "}
-            {isEditing ? (
-              <input
-                type="text"
-                value={accountId}
-                onChange={(e) => setAccountId(e.target.value)}
-              />
-            ) : (
-              accountId
-            )}
-          </div>
-          <div>
-            AWS Access Key:{" "}
-            {isEditing ? (
-              <input
-                type="text"
-                value={accessKey}
-                onChange={(e) => setAccessKey(e.target.value)}
-              />
-            ) : (
-              accessKey
-            )}
-          </div>
-          <div>
-            AWS Secret Key:{" "}
-            {isEditing ? (
-              <input
-                type="text"
-                value={secretKey}
-                onChange={(e) => setSecretKey(e.target.value)}
-              />
-            ) : (
-              secretKey
-            )}
-          </div>
-          <div>
-            AWS Region:{" "}
-            {isEditing ? (
-              <input
-                type="text"
-                value={region}
-                onChange={(e) => setRegion(e.target.value)}
-              />
-            ) : (
-              region
-            )}
-          </div>
-          <div>
-            Github OAuth Token:{" "}
-            {isEditing ? (
-              <input
-                type="text"
-                value={githubToken}
-                onChange={(e) => setGithubToken(e.target.value)}
-              />
-            ) : (
-              githubToken
-            )}
-          </div>
+          <EditLine>
+            <EditName>AWS Account ID: </EditName>
+            <EditInput>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={accountId}
+                  onChange={(e) => setAccountId(e.target.value)}
+                  ref={accountIdRef}
+                />
+              ) : (
+                accountId
+              )}
+            </EditInput>
+          </EditLine>
+          <EditLine>
+            <EditName>AWS Access Key: </EditName>
+            <EditInput>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={accessKey}
+                  onChange={(e) => setAccessKey(e.target.value)}
+                  ref={accessKeyRef}
+                />
+              ) : (
+                accessKey
+              )}
+            </EditInput>
+          </EditLine>
+          <EditLine>
+            <EditName>AWS Secret Key: </EditName>
+            <EditInput>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={secretKey}
+                  onChange={(e) => setSecretKey(e.target.value)}
+                  ref={secretKeyRef}
+                />
+              ) : (
+                secretKey
+              )}
+            </EditInput>
+          </EditLine>
+          <EditLine>
+            <EditName>AWS Region: </EditName>
+            <EditInput>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value)}
+                  ref={regionRef}
+                />
+              ) : (
+                region
+              )}
+            </EditInput>
+          </EditLine>
+          <EditLine>
+            <EditName>Github OAuth Token: </EditName>
+            <EditInput>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={githubToken}
+                  onChange={(e) => setGithubToken(e.target.value)}
+                  ref={githubTokenRef}
+                />
+              ) : (
+                githubToken
+              )}
+            </EditInput>
+          </EditLine>
           {isEditing ? (
-            <Button variant="outlined" onClick={handleSaveClick}>
-              저장하기
-            </Button>
+            <>
+              <Button
+                variant="outlined"
+                onClick={handleEditClick}
+                style={{ marginRight: "5px" }}
+              >
+                취소하기
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={handleSaveClick}
+                style={{ marginLeft: "5px" }}
+              >
+                저장하기
+              </Button>
+            </>
           ) : (
-            <Button variant="outlined" onClick={handleEditClick}>
+            <Button
+              variant="outlined"
+              onClick={handleEditClick}
+              style={{ marginTop: "10px" }}
+            >
               수정하기
             </Button>
           )}

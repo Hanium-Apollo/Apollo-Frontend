@@ -8,31 +8,39 @@ import {
   serverRepoDeleteService,
 } from "../../apis/RepoService";
 import { UserInfo } from "../../apis/UserServiceType";
+import { useCookies } from "react-cookie";
+
 type deployData = {
-  repoName: string;
-  type: string;
-  userId: String;
+  content: string;
+  endpoint: string;
+  serviceId: string;
+  stackName: string;
+  stackType: string;
+};
+type ItemProps = {
+  deploy: deployData;
+  userId: string;
 };
 type ListItemProps = {
   deploylist: deployData[];
+  userId: string;
 };
-
-function ListItem({ userId, repoName, type }: deployData) {
+function ListItem({ ...props }: ItemProps) {
   const navigate = useNavigate();
   const handleSubmit = () => {
-    navigate("/monitor", { state: { repoName } });
+    navigate("/monitor", { state: { repoName: props.deploy.stackName } });
   };
   const handleClick = () => {
-    if (type === "client") {
-      clientRepoDeleteService(userId, repoName)
+    if (props.deploy.stackType === "client") {
+      clientRepoDeleteService(props.userId, props.deploy.stackName)
         .then((response) => {
           console.log(response.data);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-    } else if (type === "server") {
-      serverRepoDeleteService(userId, repoName)
+    } else if (props.deploy.stackType === "server") {
+      serverRepoDeleteService(props.userId, props.deploy.stackName)
         .then((response) => {
           console.log(response.data);
         })
@@ -44,10 +52,14 @@ function ListItem({ userId, repoName, type }: deployData) {
   };
   return (
     <div
-      style={{ display: "flex", alignItems: "center", marginBottom: "15px" }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        marginBottom: "10px",
+      }}
     >
-      <li className="list">{repoName}</li>
-      {type === "client" ? (
+      <li className="list">{props.deploy.stackName}</li>
+      {props.deploy.stackType === "client" ? (
         <button className="selectbtn" onClick={() => handleClick()}>
           삭제
         </button>
@@ -65,14 +77,9 @@ function ListItem({ userId, repoName, type }: deployData) {
   );
 }
 
-function NumberList({ deploylist }: ListItemProps) {
+function NumberList({ deploylist, userId }: ListItemProps) {
   const listItems = deploylist.map((item, index) => (
-    <ListItem
-      key={index.toString()}
-      userId={item.userId}
-      repoName={item.repoName}
-      type={item.type}
-    />
+    <ListItem key={index.toString()} deploy={item} userId={userId} />
   ));
   return (
     <div className="deploylist">
@@ -82,18 +89,19 @@ function NumberList({ deploylist }: ListItemProps) {
 }
 
 function DeployList() {
-  const [DeployData, setDeployData] = useState<ListItemProps["deploylist"]>([]);
+  const [DeployData, setDeployData] = useState<deployData[]>([]);
+  const [cookie] = useCookies(["token"]);
+  let info = localStorage.getItem("userInfo");
+  let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
   const ClientData = useMemo(() => {
-    return DeployData.filter((item) => item.type === "client");
+    return DeployData.filter((item) => item.stackType === "client");
   }, [DeployData]);
 
   const ServerData = useMemo(() => {
-    return DeployData.filter((item) => item.type === "server");
+    return DeployData.filter((item) => item.stackType === "server");
   }, [DeployData]);
   const getDeploy = useCallback(() => {
-    let info = localStorage.getItem("userInfo");
-    let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
-    let accessToken = localStorage.getItem("token");
+    let accessToken = cookie.token;
     if (!parsedInfo) return;
     let userId = parsedInfo.id;
     if (accessToken && userId) {
@@ -106,7 +114,7 @@ function DeployList() {
           console.error("Error fetching data:", error);
         });
     }
-  }, []);
+  }, [cookie.token, parsedInfo]);
 
   useEffect(() => {
     getDeploy();
@@ -115,13 +123,17 @@ function DeployList() {
     <div className="deploy">
       <div>
         <div className="name">배포 중 client</div>
-        {ClientData !== null && <NumberList deploylist={ClientData} />}
+        {ClientData !== null && parsedInfo && (
+          <NumberList deploylist={ClientData} userId={parsedInfo?.id} />
+        )}
       </div>
       <div>
         <div className="name">배포 중 server</div>
-        {ServerData !== null && <NumberList deploylist={ServerData} />}
-        <Button css={"fhomebtn"} text={"home"} />
+        {ServerData !== null && parsedInfo && (
+          <NumberList deploylist={ServerData} userId={parsedInfo?.id} />
+        )}
       </div>
+      <Button css={"fhomebtn"} text={"home"} />
     </div>
   );
 }

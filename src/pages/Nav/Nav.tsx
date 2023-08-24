@@ -38,6 +38,9 @@ const Nav = () => {
   const GotoMyPage = () => {
     navigate("/mypage");
   };
+  const GotoBoard = () => {
+    navigate("/board");
+  };
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -83,6 +86,13 @@ const Nav = () => {
               style={{ cursor: "pointer" }}
             >
               Success
+            </li>
+            <li
+              className="menu"
+              onClick={GotoBoard}
+              style={{ cursor: "pointer" }}
+            >
+              Board
             </li>
             <li
               className="menu"

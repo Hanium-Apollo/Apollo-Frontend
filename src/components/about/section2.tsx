@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import styled from "@emotion/styled";
-import wallpaper from "../../assets/images/wallpaperf.jpg";
 
 const SectionContainer = styled(Grid)`
   display: flex;
-  background-image: url(${wallpaper});
+  flex: 1;
+  position: absolute;
+  max-width: 1440px;
+  background-color: #2C2C2C;
   z-index: 1;
   justify-content: center;
   align-items: center;
-  padding: 50px 0 30px 0;
+  padding: 80px;
   width: 100vw;
-  height: 100vh;
   text-align: center;
-  max-width: 1440px;
 `;
 
 const Text = styled.div`
@@ -22,7 +22,7 @@ const Text = styled.div`
   font-weight: 700;
   line-height: 1.8;
   letter-spacing: -1px;
-  font-size: 100px;
+  font-size: 80px;
 
   @font-face {
     font-family: "AppleBold";
@@ -79,19 +79,19 @@ export const Section2: React.FC<Section2Props> = ({ children }) => {
   return (
     <SectionContainer container xs id="how">
       <Scroll>
-        <Text className={1050 < scrollY && scrollY < 1150 ? "show" : "hide"}>
+        <Text className={1000 < scrollY && scrollY < 1100 ? "show" : "hide"}>
           전례없던 <span className="highlight">{" 배포 "}</span>서비스.
         </Text>
-        <Text className={1150 < scrollY && scrollY < 1250 ? "show" : "hide"}>
+        <Text className={1100 < scrollY && scrollY < 1200 ? "show" : "hide"}>
           뛰어난 안정성으로 자식같은 서비스를 안전하게.
         </Text>
-        <Text className={1250 < scrollY && scrollY < 1350 ? "show" : "hide"}>
+        <Text className={1200 < scrollY && scrollY < 1300 ? "show" : "hide"}>
           걱정할 필요없는 비용문제.
         </Text>
-        <Text className={1350 < scrollY && scrollY < 1450 ? "show" : "hide"}>
+        <Text className={1300 < scrollY && scrollY < 1400 ? "show" : "hide"}>
           메이저 개발 언어 모두를 포용하는 편리함.
         </Text>
-        <Text className={1450 < scrollY && scrollY < 1550 ? "show" : "hide"}>
+        <Text className={1400 < scrollY && scrollY < 1500 ? "show" : "hide"}>
           모니터링 페이지를 통해 배포 상황 실시간 확인까지.
         </Text>
       </Scroll>

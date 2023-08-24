@@ -46,6 +46,7 @@
   border-radius: 1000px;
   border: none;
   overflow: hidden;
+  
   @media (max-width: 600px) {
     width: 20%;
     margin-top: 10%;

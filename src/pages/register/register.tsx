@@ -107,16 +107,16 @@ export const Register = () => {
 
   return (
     <ContainerWrapper>
+      <StyledToastContainer
+        position="top-center"
+        limit={1}
+        closeOnClick
+        autoClose={3000}
+        hideProgressBar
+        pauseOnHover
+        closeButton={false}
+      />
       <ThemeProvider theme={theme}>
-        <StyledToastContainer
-          position="top-center"
-          limit={1}
-          closeOnClick
-          autoClose={3000}
-          hideProgressBar
-          pauseOnHover
-          closeButton={false}
-        />
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box

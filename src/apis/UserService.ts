@@ -7,6 +7,18 @@ export interface Credentials {
   AWSSecretKey: string;
   GithubOAuthToken: string;
 }
+
+export interface PatchCredentials {
+  AWSAccountId: string | null;
+  AWSRegion: string | null;
+  AWSAccessKey: string | null;
+  AWSSecretKey: string | null;
+  GithubOAuthToken:
+    | string
+    | React.MutableRefObject<HTMLInputElement | null>
+    | null;
+}
+
 export const postAuthenticationService = (code: String) => {
   return apiClient.post(`/api/authenticate`, {}, { params: { code } });
 };
@@ -40,7 +52,10 @@ export const getCredentials = (userId: String) => {
   return apiClient.get(`/api/credential/${userId}`, {});
 };
 
-export const patchCredentials = (userId: String, credentials: Credentials) => {
+export const patchCredentials = (
+  userId: String,
+  credentials: PatchCredentials
+) => {
   return apiClient.patch(`/api/credential/${userId}`, credentials, {
     withCredentials: true,
     headers: { "Content-Type": "application/json" },
