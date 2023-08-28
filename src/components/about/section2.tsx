@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Grid } from "@mui/material";
 import styled from "@emotion/styled";
 
@@ -6,7 +6,7 @@ const SectionContainer = styled(Grid)`
   display: flex;
   flex: 1;
   max-width: 1440px;
-  background-color: #2C2C2C;
+  background-color: #2c2c2c;
   z-index: 1;
   justify-content: center;
   align-items: center;
@@ -59,16 +59,23 @@ interface Section2Props {
 
 export const Section2: React.FC<Section2Props> = ({ children }) => {
   const [scrollY, setScrollY] = useState(0);
+  const targetRef = useRef<HTMLElement | null>(null);
 
   const handleScroll = () => {
     const scrollPosition = window.pageYOffset;
     setScrollY(scrollPosition);
+
+    if (window.scrollY > 0 && targetRef.current) {
+      targetRef.current.style.position = "fixed";
+    }
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
+    const timer = setInterval(() => {
+      window.addEventListener("scroll", handleScroll);
+    }, 100);
     return () => {
+      clearInterval(timer);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
