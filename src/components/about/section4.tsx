@@ -76,53 +76,69 @@ export const Section4: React.FC<Section4Props> = ({ children }) => {
         {"는 AWS 계정 연동을 위해 IAM을 사용합니다."}
       </Text>
       <SectionInner>
-        <img src={Description1} alt="" height={"500px"} width={"1000px"}></img>
-        <Text>{"상단의 계정 아이디를 클릭하여 [계정]을 클릭"}</Text>
+        <Text>
+          <span className="highlight">{"1. "}</span>
+          {"상단의 계정 아이디를 클릭하여 [계정]을 클릭"}
+        </Text>
         <Text>
           {
             "그 후 아래 결제 정보에 대한 IAM 사용자 및 역할 액세스 에서 편집 클릭 → 엑세스 활성화 "
           }
         </Text>
+        <img src={Description1} alt="" height={"500px"} width={"1000px"}></img>
       </SectionInner>
       <SectionInner>
-        <img src={Description2} alt="" height={"500px"} width={"1000px"}></img>
-        <Text>{"상단의 검색창에서 IAM 검색"}</Text>
+        <Text>
+          <span className="highlight">{"2. "}</span>
+          {"상단의 검색창에서 IAM 검색"}
+        </Text>
+        <img src={Description2} alt="" width={"1000px"}></img>
       </SectionInner>
       <SectionInner>
-        <img src={Description3} alt="" height={"500px"} width={"1000px"}></img>
-        <img src={Description4} alt="" height={"500px"} width={"1000px"}></img>
-        <Text>{"[사용자] - [사용자 생성]"}</Text>
+        <Text>
+          <span className="highlight">{"3. "}</span>
+          {"[사용자] - [사용자 생성]"}
+        </Text>
+        <img src={Description3} alt="" width={"1000px"}></img>
+        <img src={Description4} alt="" width={"1000px"}></img>
       </SectionInner>
       <SectionInner>
+        <Text>
+          <span className="highlight">{"4. "}</span>
+          {"그룹 생성 클릭"}
+        </Text>
         <img
           src={Description5}
           alt=""
-          height={"600px"}
           width={"1000px"}
           style={{ marginBottom: "20px" }}
         ></img>
-        <img src={Description6} alt="" height={"600px"} width={"1000px"}></img>
-        <Text>{"그룹 생성 클릭"}</Text>
+        <img src={Description6} alt="" width={"1000px"}></img>
       </SectionInner>
       <SectionInner>
+        <Text>
+          <span className="highlight">{"5. "}</span>
+          {"AdministratorAccess 선택"}
+        </Text>
         <img
           src={Description7}
           alt=""
-          height={"600px"}
           width={"1000px"}
           style={{ marginBottom: "20px" }}
         ></img>
-        <img src={Description8} alt="" height={"600px"} width={"1000px"}></img>
-        <Text>{"AdministratorAccess 선택"}</Text>
+        <img src={Description8} alt="" width={"1000px"}></img>
       </SectionInner>
       <SectionInner>
-        <img src={Description9} alt="" height={"600px"} width={"1000px"}></img>
-        <Text>{"사용자생성 클릭"}</Text>
+        <Text>
+          <span className="highlight">{"6. "}</span>
+          {"사용자생성 클릭"}
+        </Text>
         <Text>
           {
-            ".csv 파일을 열게 되면 IAM 사용자 명, 콘솔 로그인 url, 비밀번호를 모두 확인 할 수 있다. "
+            ".csv 파일을 열게 되면 IAM 사용자 명, 콘솔 로그인 url, 비밀번호를 모두 확인할 수 있다. "
           }
         </Text>
+        <img src={Description9} alt="" width={"1000px"}></img>
       </SectionInner>
     </SectionContainer>
   );
