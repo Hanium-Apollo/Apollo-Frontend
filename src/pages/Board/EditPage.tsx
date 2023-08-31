@@ -91,7 +91,7 @@ export const Edit = () => {
       await patchBoard(postId, userId, title, content, tagNames);
       navigate(`/board/${postId}`);
     }
-  }, [userId, value, accessToken, postId]);
+  }, [userId, value, accessToken, postId, navigate]);
   const handleSubmit = () => {
     Patchpost();
   };
