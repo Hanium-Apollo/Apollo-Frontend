@@ -80,7 +80,7 @@ export const Write = () => {
       await postBoard(userId, title, content, tagNames);
       navigate("/board");
     }
-  }, [userId, value, accessToken]);
+  }, [userId, value, accessToken, navigate]);
   const handleSubmit = () => {
     Postpost();
   };
