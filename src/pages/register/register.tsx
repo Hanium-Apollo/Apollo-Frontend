@@ -17,10 +17,21 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 
-const theme = createTheme();
-
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#151515", // 원하는 주요 색상으로 수정
+    },
+    background: {
+      default: "#151515",
+    },
+  },
+  typography: {
+    fontFamily: "Inter",
+  },
+});
 const ContainerWrapper = styled.div`
-  max-width: 1280px;
+  max-width: 1440px;
   min-height: 750px;
   width: 100vw;
   height: 100vh;

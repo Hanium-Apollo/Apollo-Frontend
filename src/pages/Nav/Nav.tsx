@@ -23,7 +23,7 @@ const Nav = () => {
     window.location.href = "/";
   };
   const GotoMain = () => {
-    navigate("/"); // Navigate to another route
+    navigate("/");
   };
 
   const GotoDeployList = () => {
