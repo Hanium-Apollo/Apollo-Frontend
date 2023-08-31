@@ -22,6 +22,15 @@ export const getBoardDetail = (postId: string) => {
   return apiClient.get(`/api/board/${postId}`, {});
 };
 
+export const getBoardbyTag = (tagId: string, pageNum: number) => {
+  const queryParams = { tagId: tagId, pageNum: pageNum };
+  return apiClient.get(`/api/board/associate-with`, { params: queryParams });
+};
+
+export const getBoardbyContent = (searchString: string, pageNum: number) => {
+  return apiClient.get(`/api/board/titleOrContent/${searchString}/${pageNum}`);
+};
+
 export const deleteBoard = (postId: string, userId: string) => {
   return apiClient.delete(`/api/board/${postId}`, {
     data: { userId: userId },

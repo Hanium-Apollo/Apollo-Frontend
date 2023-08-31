@@ -10,11 +10,12 @@ export interface PostData {
   postId: string;
   title: string;
   content: string;
-  createdAt: string;
+  createAt: string;
   tags: TagProps[];
 }
 
 export interface CommentData {
+  writerLogin: string;
   commentId: string;
   writerId: string;
   content: string;
@@ -31,6 +32,7 @@ export const BoardDetail = () => {
         .then((response) => {
           setPost(response.data.post);
           setComments(response.data.comments);
+          console.log(response.data.comments);
         })
         .catch((error) => {});
     }

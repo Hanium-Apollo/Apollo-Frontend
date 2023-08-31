@@ -35,14 +35,14 @@ interface PostDetailProps {
 
 export const PostDetail = (prop: PostDetailProps) => {
   const navigate = useNavigate();
-  //   const date = prop.post.createdAt.split("T")[0].split("-").join(".");
-  //   const time = prop.post.createdAt
-  //     .split("T")[1]
-  //     .split(".")[0]
-  //     .split(":")
-  //     .slice(0, 2)
-  //     .join(":");
-  //   const createdAt = `${date} ${time}`;
+  const date = prop.post.createAt.split("T")[0].split("-").join(".");
+  const time = prop.post.createAt
+    .split("T")[1]
+    .split(".")[0]
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  const createAt = `${date} ${time}`;
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const number = prop.comments.length;
   let info = localStorage.getItem("userInfo");
@@ -75,7 +75,7 @@ export const PostDetail = (prop: PostDetailProps) => {
     }
   };
   const tagItems = prop.post.tags.map((item, index) => (
-    <Tag tagName={item.tagName} />
+    <Tag tagName={item.tagName} tagId={item.tagId} />
   ));
 
   return (
@@ -101,17 +101,6 @@ export const PostDetail = (prop: PostDetailProps) => {
           }}
         >
           {prop.post.userLogin}
-        </div>
-        <div
-          style={{
-            width: "100%",
-            marginBottom: "10px",
-            fontSize: "12px",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          {prop.post.createdAt}
         </div>
 
         <div
@@ -154,7 +143,7 @@ export const PostDetail = (prop: PostDetailProps) => {
             justifyContent: "flex-start",
           }}
         >
-          {prop.post.createdAt}
+          {createAt}
         </div>
         <div
           style={{

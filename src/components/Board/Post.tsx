@@ -47,9 +47,16 @@ const PostContent = styled.div`
 
 const Post = (props: PostProps) => {
   const navigate = useNavigate();
-  console.log(props);
+  const date = props.createAt.split("T")[0].split("-").join(".");
+  const time = props.createAt
+    .split("T")[1]
+    .split(".")[0]
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  const createAt = `${date} ${time}`;
   const tagItems = props.tags.map((item, index) => (
-    <Tag tagName={item.tagName} />
+    <Tag tagName={item.tagName} tagId={item.tagId} />
   ));
   const GotoDetail = () => {
     navigate(`/board/${props.postId}`);
@@ -58,7 +65,7 @@ const Post = (props: PostProps) => {
     <Item onClick={GotoDetail}>
       <PostTitle>{props.title}</PostTitle>
       <PostName>{props.userLogin}</PostName>
-      <PostName>{props.createdAt}</PostName>
+      <PostName>{createAt}</PostName>
       <PostContent>{tagItems}</PostContent>
     </Item>
   );

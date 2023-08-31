@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { TagProps } from "../../pages/Board/BoardPage";
 
 const TagBox = styled.div`
   display: flex;
@@ -21,9 +22,6 @@ const TagItem = styled.div`
   align-items: center;
   padding: 0px 5px 0px 5px;
 `;
-interface TagProps {
-  tagName: string;
-}
 
 export const Tag = (tag: TagProps) => {
   return (

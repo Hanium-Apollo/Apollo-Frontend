@@ -4,6 +4,14 @@ import { deleteComment } from "../../apis/BoardService";
 
 const Comment = (prop: CommentData) => {
   let info = localStorage.getItem("userInfo");
+  const date = prop.writeAt.split("T")[0].split("-").join(".");
+  const time = prop.writeAt
+    .split("T")[1]
+    .split(".")[0]
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  const createAt = `${date} ${time}`;
   const parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
   const userId = parsedInfo?.id;
   const Delete = async () => {
@@ -35,9 +43,33 @@ const Comment = (prop: CommentData) => {
         }}
       >
         <div
-          style={{ flex: "1", display: "flex", justifyContent: "flex-start" }}
+          style={{
+            flex: "1",
+            display: "flex",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+          }}
         >
-          {prop.writerId}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: "14px",
+              marginRight: "10px",
+            }}
+          >
+            {prop.writerLogin}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              fontSize: "10px",
+              color: "#BBBBBB",
+            }}
+          >
+            {createAt}
+          </div>
         </div>
         {prop.writerId === userId && (
           <div

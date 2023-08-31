@@ -29,7 +29,7 @@ const List = styled.div`
 
 export interface PostProps {
   title: string;
-  createdAt: string;
+  createAt: string;
   tags: TagProps[];
   postId: number;
   userLogin: string;
@@ -43,7 +43,7 @@ export const PostList = (props: PostListProps) => {
   const listItems = props.posts.map((item, index) => (
     <Post
       title={item.title}
-      createdAt={item.createdAt}
+      createAt={item.createAt}
       tags={item.tags}
       postId={item.postId}
       userLogin={item.userLogin}
