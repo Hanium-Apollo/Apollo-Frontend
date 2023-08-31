@@ -138,9 +138,6 @@ const TagItem = styled.div`
   padding: 0px 5px 0px 5px;
   cursor: pointer;
 `;
-interface TagListProps {
-  tags: TagProps[];
-}
 export interface TagProps {
   tagId: string;
   tagName: string;
@@ -197,7 +194,7 @@ export const Board = () => {
         })
         .catch((err) => {});
     }
-  }, [tag, title]);
+  }, [tag, title, page]);
   const handlePage = (i: number) => {
     setPage(i);
     GetPost();

@@ -159,7 +159,7 @@ function DeployList() {
           console.error("Error fetching data:", error);
         });
     }
-  }, [userId]);
+  }, [userId, accessToken]);
 
   useEffect(() => {
     getDeploy();
