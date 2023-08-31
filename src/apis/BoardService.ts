@@ -1,8 +1,8 @@
-import { comment } from "@uiw/react-md-editor";
 import { apiClient } from "./ApiClient";
 
-export const getBoardList = () => {
-  return apiClient.get(`/api/board`, {});
+export const getBoardList = (pageNum: number) => {
+  const queryParams = { pageNum: pageNum };
+  return apiClient.get(`/api/board`, { params: queryParams });
 };
 
 export const postBoard = (
@@ -20,6 +20,15 @@ export const postBoard = (
 
 export const getBoardDetail = (postId: string) => {
   return apiClient.get(`/api/board/${postId}`, {});
+};
+
+export const getBoardbyTag = (tagId: string, pageNum: number) => {
+  const queryParams = { tagId: tagId, pageNum: pageNum };
+  return apiClient.get(`/api/board/associate-with`, { params: queryParams });
+};
+
+export const getBoardbyContent = (searchString: string, pageNum: number) => {
+  return apiClient.get(`/api/board/titleOrContent/${searchString}/${pageNum}`);
 };
 
 export const deleteBoard = (postId: string, userId: string) => {

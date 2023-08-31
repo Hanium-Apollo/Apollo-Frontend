@@ -8,13 +8,12 @@ import Docker_java from "../../assets/images/Docker_java.png";
 
 const SectionContainer = styled(Grid)`
   display: flex;
-  position: absolute;
   flex: 1;
   max-width: 1440px;
   background-color: #313131;
   z-index: 1;
   padding: 50px;
-  width: 100vw;
+  width: 100%;
   align-items: center;
   justify-content: center;
   transform: translate(0, 0);
@@ -33,9 +32,6 @@ const Text = styled.div`
   }
   font-family: "One";
 
-  span.highlight {
-    color: #f3f781;
-  }
   @media (max-width: 768px) {
     font-size: 15px;
   }
@@ -80,7 +76,7 @@ export const Section3: React.FC<Section3Props> = ({ children }) => {
         </Section3Inner>
         <Section3Inner>
           <Text>{" Java 배포시 Dockerfile 작성요령 "}</Text>
-          <img src={Docker_java} alt="" height={"500px"} />
+          <img src={Docker_java} alt="" height={"500px"} width={"800px"} />
         </Section3Inner>
       </Grid>
     </SectionContainer>

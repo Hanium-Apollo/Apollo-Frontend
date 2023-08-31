@@ -24,16 +24,16 @@ export const serverRepoCreateService = (userId: String, repoName: String) => {
   );
 };
 
-export const clientRepoDeleteService = (userId: String, repoName: string) => {
+export const clientRepoDeleteService = (userId: String, serviceId: string) => {
   return apiClient.delete(`/api/cloudformation/${userId}/client`, {
-    data: { repoName: repoName },
+    data: { serviceId: serviceId },
     withCredentials: true,
   });
 };
 
-export const serverRepoDeleteService = (userId: String, repoName: string) => {
+export const serverRepoDeleteService = (userId: String, serviceId: string) => {
   return apiClient.delete(`/api/cloudformation/${userId}/server`, {
-    data: { repoName: repoName },
+    data: { serviceId: serviceId },
     withCredentials: true,
   });
 };

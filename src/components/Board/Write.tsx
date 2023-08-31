@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 import styled from "@emotion/styled";
 import { Button } from "@mui/material";
-import { title } from "process";
 import { postBoard } from "../../apis/BoardService";
 import { UserInfo } from "../../apis/UserServiceType";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   position: absolute;
@@ -35,17 +35,23 @@ const Editor = styled(MDEditor)`
   flex: 10;
 `;
 
-const PreviewContainer = styled.div`
-  width: 100%; /* Set the width you desire */
-`;
+// const PreviewContainer = styled.div`
+//   width: 100%; /* Set the width you desire */
+// `;
 const Btn = styled(Button)`
   color: white;
+  background-color: #4cbccc;
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
   :hover {
     font-weight: bold;
   }
 `;
 
 export const Write = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const titleRef = React.useRef<HTMLInputElement>(null);
   const tagRef = React.useRef<HTMLInputElement>(null);
@@ -58,15 +64,21 @@ export const Write = () => {
   const handleEditorChange = (newValue: string | undefined) => {
     if (typeof newValue === "string") {
       setValue(newValue);
-      console.log("User input:", newValue); // 콘솔에 사용자 입력값 출력
     }
   };
-  const Postpost = useCallback(() => {
+  const Postpost = useCallback(async () => {
     const title = titleRef.current?.value;
-    const tagNames = tagRef.current?.value.replace(/ /gi, "").split("#");
+    const tagNames = tagRef.current?.value
+      .replace(/\s+/g, "")
+      .split("#")
+      .filter((tag) => tag.trim() !== "");
+
     const content = value;
+    console.log(title, tagNames, content);
+
     if (accessToken && userId && title && tagNames && content) {
-      postBoard(userId, title, content, tagNames);
+      await postBoard(userId, title, content, tagNames);
+      navigate("/board");
     }
   }, [userId, value, accessToken]);
   const handleSubmit = () => {
@@ -79,9 +91,10 @@ export const Write = () => {
         <div
           style={{
             display: "flex",
-            fontSize: "16px",
+            fontSize: "18px",
             color: "white",
             alignItems: "center",
+            fontWeight: "bold",
           }}
         >
           제목 :{" "}
@@ -96,7 +109,7 @@ export const Write = () => {
           }}
         >
           <input
-            placeholder="제목을 입력해주세요."
+            placeholder=" 제목을 입력해주세요."
             style={{ width: "100%" }}
             ref={titleRef}
           ></input>
@@ -106,9 +119,10 @@ export const Write = () => {
         <div
           style={{
             display: "flex",
-            fontSize: "16px",
+            fontSize: "18px",
             color: "white",
             alignItems: "center",
+            fontWeight: "bold",
           }}
         >
           태그 :{" "}
@@ -123,8 +137,9 @@ export const Write = () => {
           }}
         >
           <input
-            placeholder="제목을 입력해주세요."
+            placeholder=" 태그를 입력해주세요. 예시. #JS #React"
             style={{ width: "100%" }}
+            ref={tagRef}
           ></input>
         </div>
       </Item>

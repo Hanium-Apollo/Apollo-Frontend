@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { PostProps } from "./PostList";
 import { useNavigate } from "react-router-dom";
+import Tag from "./tag";
 
 const Item = styled.div`
   display: flex;
@@ -43,31 +44,19 @@ const PostContent = styled.div`
   flex-direction: row;
   padding: 5px;
 `;
-const TagBox = styled.div`
-  display: flex;
-  height: 100%;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-const Tag = styled.div`
-  text-align: center;
-  display: grid;
-  background-color: #4cbccc;
-  border-radius: 10px;
-  width: 80%;
-  height: 80%;
-  font-size: 12px;
-  color: white;
-  align-items: center;
-`;
 
-const Post = ({ ...props }: PostProps) => {
+const Post = (props: PostProps) => {
   const navigate = useNavigate();
-  const tagItems = props.tag.map((item, index) => (
-    <TagBox>
-      <Tag>{item}</Tag>
-    </TagBox>
+  const date = props.createAt.split("T")[0].split("-").join(".");
+  const time = props.createAt
+    .split("T")[1]
+    .split(".")[0]
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  const createAt = `${date} ${time}`;
+  const tagItems = props.tags.map((item, index) => (
+    <Tag tagName={item.tagName} tagId={item.tagId} />
   ));
   const GotoDetail = () => {
     navigate(`/board/${props.postId}`);
@@ -75,8 +64,8 @@ const Post = ({ ...props }: PostProps) => {
   return (
     <Item onClick={GotoDetail}>
       <PostTitle>{props.title}</PostTitle>
-      <PostName>{props.nickname}</PostName>
-      <PostName>{props.createdAt}</PostName>
+      <PostName>{props.userLogin}</PostName>
+      <PostName>{createAt}</PostName>
       <PostContent>{tagItems}</PostContent>
     </Item>
   );

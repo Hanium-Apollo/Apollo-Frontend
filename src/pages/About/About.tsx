@@ -4,6 +4,7 @@ import MainContainer from "../../components/about/MainContainer";
 import { Section1 } from "../../components/about/section1";
 import { Section2 } from "../../components/about/section2";
 import { Section3 } from "../../components/about/section3";
+import { Section4 } from "../../components/about/section4";
 
 const About: React.FC = () => {
   return (
@@ -16,6 +17,9 @@ const About: React.FC = () => {
       </Grid>
       <Grid item xs={12}>
         <Section3 children={undefined}></Section3>
+      </Grid>
+      <Grid item xs={12}>
+        <Section4 children={undefined}></Section4>
       </Grid>
     </MainContainer>
   );

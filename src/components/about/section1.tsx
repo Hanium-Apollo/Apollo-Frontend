@@ -9,7 +9,6 @@ import { Link } from "react-scroll";
 const SectionContainer = styled(Grid)`
   display: flex;
   flex: 1;
-  position: absolute;
   left: 0;
   top: 0;
   flex-direction: column;
@@ -18,7 +17,6 @@ const SectionContainer = styled(Grid)`
   padding: 60px;
   width: 100vw;
   justify-content: center;
-  
 `;
 
 const TextContainer = styled(Grid)`
@@ -137,7 +135,7 @@ const ButtonContainer = styled(Grid)`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 20px 10px 20px;
+    margin: 20px 0px 10px 0px;
     padding: 20px 20px 20px 20px;
 
     & > *:not(:last-child) {
@@ -180,12 +178,31 @@ export const Section1: React.FC<Section1Props> = ({ children }) => {
             {"Get Started 👌🏼"}
           </StyledButton>
 
-          <Link to="how" spy={true} smooth="true">
-            <StyledButton variant="text">{"Apollo ? 🤔"}</StyledButton>
+          <Link
+            to="how"
+            spy={true}
+            smooth="true"
+            style={{ textDecoration: "none" }}
+          >
+            <StyledButton>{"Apollo ? 🤔"}</StyledButton>
           </Link>
 
-          <Link to="docker" spy={true} smooth="true">
+          <Link
+            to="docker"
+            spy={true}
+            smooth="true"
+            style={{ textDecoration: "none" }}
+          >
             <StyledButton>{"If No Dockerfile 🐳"}</StyledButton>
+          </Link>
+
+          <Link
+            to="iam"
+            spy={true}
+            smooth="true"
+            style={{ textDecoration: "none" }}
+          >
+            <StyledButton>{"IAM 🤖"}</StyledButton>
           </Link>
         </Fade>
       </ButtonContainer>

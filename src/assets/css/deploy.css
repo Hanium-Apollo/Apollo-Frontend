@@ -46,12 +46,9 @@
   opacity: 0.8;
 }
 .deploylist {
-  margin-top: 10%;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  width: 50vw;
-  max-height: 500px;
+  margin-top: 50px;
+  width: 100%;
+  height: 300px;
   overflow: auto;
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
 }

@@ -1,10 +1,12 @@
 import styled from "@emotion/styled";
-import { CommentData, PostData } from "../../pages/Borad/PostPage";
+import { CommentData, PostData } from "../../pages/Board/PostPage";
 import CommentList from "./CommentList";
 import { useRef } from "react";
 import { deleteBoard, postComment } from "../../apis/BoardService";
 import { useNavigate } from "react-router-dom";
 import MDEditor from "@uiw/react-md-editor";
+import { UserInfo } from "../../apis/UserServiceType";
+import Tag from "./tag";
 
 export const ScrollContent = styled.div`
   display: flex;
@@ -33,33 +35,37 @@ interface PostDetailProps {
 
 export const PostDetail = (prop: PostDetailProps) => {
   const navigate = useNavigate();
-  //   const date = prop.post.createdAt.split("T")[0].split("-").join(".");
-  //   const time = prop.post.createdAt
-  //     .split("T")[1]
-  //     .split(".")[0]
-  //     .split(":")
-  //     .slice(0, 2)
-  //     .join(":");
-  //   const createdAt = `${date} ${time}`;
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const date = prop.post.createAt.split("T")[0].split("-").join(".");
+  const time = prop.post.createAt
+    .split("T")[1]
+    .split(".")[0]
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  const createAt = `${date} ${time}`;
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const number = prop.comments.length;
-  let info = JSON.parse(localStorage.getItem("info") || "{}");
-  const userId = info.id;
-  const setComment = (content: string) => {
+  let info = localStorage.getItem("userInfo");
+  const parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+  const userId = parsedInfo?.id;
+  const setComment = async (content: string) => {
     if (userId) {
-      postComment(userId, prop.post.postId, content);
+      await postComment(userId, prop.post.postId, content);
+      console.log("success");
     }
   };
   const handleComment = () => {
     const content = inputRef.current?.value;
+    console.log(content);
     if (content) {
       setComment(content);
-      navigate(`/board/${prop.post.postId}`);
+      window.location.reload();
     }
   };
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (userId) {
-      deleteBoard(userId, prop.post.postId);
+      console.log(prop.post.postId);
+      await deleteBoard(prop.post.postId, userId);
       navigate("/board");
     }
   };
@@ -68,6 +74,9 @@ export const PostDetail = (prop: PostDetailProps) => {
       navigate(`/board/${prop.post.postId}/edit`);
     }
   };
+  const tagItems = prop.post.tags.map((item, index) => (
+    <Tag tagName={item.tagName} tagId={item.tagId} />
+  ));
 
   return (
     <ScrollContent>
@@ -76,11 +85,24 @@ export const PostDetail = (prop: PostDetailProps) => {
           style={{
             width: "100%",
             marginBottom: "10px",
-            fontSize: "14px",
+            display: "flex",
+            alignItems: "center",
           }}
         >
-          태그
+          {tagItems}
         </div>
+        <div
+          style={{
+            width: "100%",
+            marginBottom: "10px",
+            fontSize: "12px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {prop.post.userLogin}
+        </div>
+
         <div
           style={{
             display: "flex",
@@ -103,8 +125,13 @@ export const PostDetail = (prop: PostDetailProps) => {
             <div
               style={{ flex: "1", display: "flex", justifyContent: "flex-end" }}
             >
-              <div onClick={handleEdit}>수정하기</div>/
-              <div onClick={handleDelete}>삭제하기</div>
+              <div style={{ cursor: "pointer" }} onClick={handleEdit}>
+                수정하기
+              </div>
+              /
+              <div style={{ cursor: "pointer" }} onClick={handleDelete}>
+                삭제하기
+              </div>
             </div>
           )}
         </div>
@@ -116,7 +143,7 @@ export const PostDetail = (prop: PostDetailProps) => {
             justifyContent: "flex-start",
           }}
         >
-          {prop.post.createdAt}
+          {createAt}
         </div>
         <div
           style={{

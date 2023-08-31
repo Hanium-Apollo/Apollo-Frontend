@@ -1,34 +1,47 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
-import { Grid, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import { UserInfo } from "../apis/UserServiceType";
 import { getCredentials, patchCredentials } from "../apis/UserService";
 
 const Container = styled.div`
-  max-width: 1280px;
-  min-height: 750px;
+  position: absolute;
+  display: flex;
   width: 100vw;
   height: 100vh;
-  position: absolute;
-  top: 50px;
-  left: 50%;
-  transform: translate(-50%);
-  alien-items: center;
   justify-content: center;
+  align-items: center;
+`;
+
+const MyPageContainer = styled.div`
+  position: absolute;
+  max-width: 1440px;
+  min-height: 750px;
+  display: flex;
+  width: 100vw;
+  top: 50px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1;
 `;
 
 const MyPageBox = styled(Grid)`
-  display: block;
-  width: 60%;
-  margin-left: 20%;
-  height: 85vh;
-  margin-top: 50px;
+  display: flex;
+  width: 70%;
+  height: 350px;
+  padding: 50px;
+  margin: 30px 0 30px 0;
   background-color: gray;
   opacity: 0.8;
   border-radius: 20px;
-  padding: 20px 0 10px 0;
   justify-content: center;
   align-items: center;
+  flex-direction: row;
+
+  @media (max-width: 768px) {
+    width: 90vw;
+  }
 `;
 
 const ImageBox = styled(Grid)`
@@ -40,26 +53,36 @@ const ImageBox = styled(Grid)`
 `;
 
 const CredentialsBox = styled.div`
-  margin-top: 20px;
-  background-color: white;
-  opacity: 0.9;
+  width: 70%;
+  background-color: gray;
+  opacity: 0.8;
   border-radius: 10px;
-  padding: 10px;
+  padding: 40px;
+  font-size: 20px;
+  color: white;
 `;
 
 const ProfileImage = styled.img`
   border-radius: 50%;
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
 `;
 
 const TextBox = styled(Grid)`
   width: 100%;
   display: flex;
   color: white;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+  align-items: flex-start;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 10px;
+`;
+
+const TextBoxContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 const EditLine = styled.div`
   display: flex;
@@ -76,6 +99,17 @@ const EditInput = styled.div`
   height: 100%;
   text-align: start;
   margin-left: 5px;
+`;
+const StyledButton = styled.button`
+  background-color: #4cbccc;
+  border: none;
+  border-radius: 10px;
+  width: 100px;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
 `;
 
 export const MyPage = () => {
@@ -156,13 +190,18 @@ export const MyPage = () => {
 
   return (
     <Container>
-      <MyPageBox>
-        <h1>마이페이지</h1>
-        <ImageBox>
-          <ProfileImage src={profile} alt="Profile" />
-        </ImageBox>
-        <TextBox>{name}님 반갑습니다.</TextBox>
-        <TextBox>아래는 입력하신 Cred 정보입니다.</TextBox>
+      <MyPageContainer>
+        <MyPageBox>
+          <ImageBox>
+            <ProfileImage src={profile} alt="Profile" />
+          </ImageBox>
+          <TextBoxContainer>
+            <TextBox>{name}님 안녕하세요.</TextBox>
+            <TextBox style={{ fontSize: "20px" }}>
+              아래는 입력하신 Cred 정보입니다.
+            </TextBox>
+          </TextBoxContainer>
+        </MyPageBox>
         <CredentialsBox>
           <EditLine>
             <EditName>AWS Account ID: </EditName>
@@ -205,7 +244,7 @@ export const MyPage = () => {
                   ref={secretKeyRef}
                 />
               ) : (
-                secretKey
+                "********"
               )}
             </EditInput>
           </EditLine>
@@ -235,38 +274,35 @@ export const MyPage = () => {
                   ref={githubTokenRef}
                 />
               ) : (
-                githubToken
+                "********"
               )}
             </EditInput>
           </EditLine>
           {isEditing ? (
             <>
-              <Button
-                variant="outlined"
+              <StyledButton
                 onClick={handleEditClick}
                 style={{ marginRight: "5px" }}
               >
                 취소하기
-              </Button>
-              <Button
-                variant="outlined"
+              </StyledButton>
+              <StyledButton
                 onClick={handleSaveClick}
                 style={{ marginLeft: "5px" }}
               >
                 저장하기
-              </Button>
+              </StyledButton>
             </>
           ) : (
-            <Button
-              variant="outlined"
+            <StyledButton
               onClick={handleEditClick}
               style={{ marginTop: "10px" }}
             >
               수정하기
-            </Button>
+            </StyledButton>
           )}
         </CredentialsBox>
-      </MyPageBox>
+      </MyPageContainer>
     </Container>
   );
 };

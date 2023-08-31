@@ -24,7 +24,7 @@
 
 .text-block {
   display: flex;
-  font-size: 1vw;
+  font-size: 1.5vw;
   font-family: inter;
   font-weight: bold;
   justify-content: center;
@@ -41,7 +41,7 @@
 
 .chart-container {
   width: 90%;
-  height: 70%;
+  height: 80%;
   position: relative;
   z-index: 1;
   margin-top: 1vw;
@@ -80,7 +80,7 @@
 
 .chart {
   width: 100%;
-  height: 80%;
+  height: 100%;
   margin-top: 3%;
   max-height: 750px;
   min-height: 500px;

@@ -27,12 +27,16 @@ type ListItemProps = {
 };
 function ListItem({ ...props }: ItemProps) {
   const navigate = useNavigate();
+  const [isopen, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(!isopen);
+  };
   const handleSubmit = () => {
     navigate("/monitor", { state: { repoName: props.deploy.stackName } });
   };
-  const handleClick = () => {
+  const Delete = async () => {
     if (props.deploy.stackType === "client") {
-      clientRepoDeleteService(props.userId, props.deploy.stackName)
+      await clientRepoDeleteService(props.userId, props.deploy.serviceId)
         .then((response) => {
           console.log(response.data);
         })
@@ -40,7 +44,7 @@ function ListItem({ ...props }: ItemProps) {
           console.error("Error fetching data:", error);
         });
     } else if (props.deploy.stackType === "server") {
-      serverRepoDeleteService(props.userId, props.deploy.stackName)
+      await serverRepoDeleteService(props.userId, props.deploy.serviceId)
         .then((response) => {
           console.log(response.data);
         })
@@ -48,6 +52,10 @@ function ListItem({ ...props }: ItemProps) {
           console.error("Error fetching data:", error);
         });
     }
+  };
+
+  const handleClick = () => {
+    Delete();
     navigate("/deploy");
   };
   return (
@@ -58,7 +66,44 @@ function ListItem({ ...props }: ItemProps) {
         marginBottom: "10px",
       }}
     >
-      <li className="list">{props.deploy.stackName}</li>
+      {isopen && (
+        <div
+          style={{
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            top: "30%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "350px",
+            height: "150px",
+            justifyContent: "center",
+            backgroundColor: "white",
+            cursor: "pointer",
+            zIndex: 10,
+          }}
+        >
+          endpoint: {props.deploy.endpoint}
+          <button onClick={() => handleOpen()}>취소</button>
+        </div>
+      )}
+      <li
+        className="list"
+        style={{ display: "flex", flexDirection: "row", cursor: "pointer" }}
+        onClick={() => handleOpen()}
+      >
+        <div style={{ flex: "3" }}>{props.deploy.stackName}</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            flex: "1",
+            paddingRight: "10px",
+          }}
+        >
+          {props.deploy.content}
+        </div>
+      </li>
       {props.deploy.stackType === "client" ? (
         <button className="selectbtn" onClick={() => handleClick()}>
           삭제
@@ -90,9 +135,12 @@ function NumberList({ deploylist, userId }: ListItemProps) {
 
 function DeployList() {
   const [DeployData, setDeployData] = useState<deployData[]>([]);
+  console.log(DeployData);
   const [cookie] = useCookies(["token"]);
-  let info = localStorage.getItem("userInfo");
-  let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+  const info = localStorage.getItem("userInfo");
+  const parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+  const userId = parsedInfo?.id;
+  const accessToken = cookie.token;
   const ClientData = useMemo(() => {
     return DeployData.filter((item) => item.stackType === "client");
   }, [DeployData]);
@@ -100,12 +148,9 @@ function DeployList() {
   const ServerData = useMemo(() => {
     return DeployData.filter((item) => item.stackType === "server");
   }, [DeployData]);
-  const getDeploy = useCallback(() => {
-    let accessToken = cookie.token;
-    if (!parsedInfo) return;
-    let userId = parsedInfo.id;
+  const getDeploy = useCallback(async () => {
     if (accessToken && userId) {
-      getDeployListService(userId)
+      await getDeployListService(userId)
         .then((response) => {
           console.log(response.data);
           setDeployData(response.data);
@@ -114,7 +159,7 @@ function DeployList() {
           console.error("Error fetching data:", error);
         });
     }
-  }, [cookie.token, parsedInfo]);
+  }, [userId]);
 
   useEffect(() => {
     getDeploy();

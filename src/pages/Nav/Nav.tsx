@@ -26,12 +26,6 @@ const Nav = () => {
     navigate("/"); // Navigate to another route
   };
 
-  const GotoFail = () => {
-    navigate("/fail");
-  };
-  const GotoSuccess = () => {
-    navigate("/success");
-  };
   const GotoDeployList = () => {
     navigate("/deploy");
   };
@@ -72,20 +66,6 @@ const Nav = () => {
               style={{ cursor: "pointer" }}
             >
               Home
-            </li>
-            <li
-              className="menu"
-              onClick={GotoFail}
-              style={{ cursor: "pointer" }}
-            >
-              Fail
-            </li>
-            <li
-              className="menu"
-              onClick={GotoSuccess}
-              style={{ cursor: "pointer" }}
-            >
-              Success
             </li>
             <li
               className="menu"
