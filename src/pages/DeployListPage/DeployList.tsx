@@ -161,8 +161,16 @@ function DeployList() {
     }
   }, [userId, accessToken]);
 
+  
   useEffect(() => {
     getDeploy();
+
+    const intervalId = setInterval(() => {
+      getDeploy();
+    }, 4000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [getDeploy]);
   return (
     <div className="deploy">
