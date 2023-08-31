@@ -6,7 +6,7 @@ const SectionContainer = styled(Grid)`
   display: flex;
   flex: 1;
   max-width: 1440px;
-  background-color: #2C2C2C;
+  background-color: #2c2c2c;
   z-index: 1;
   justify-content: center;
   align-items: center;
@@ -72,8 +72,6 @@ export const Section2: React.FC<Section2Props> = ({ children }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  console.log(scrollY);
 
   return (
     <SectionContainer container xs id="how">

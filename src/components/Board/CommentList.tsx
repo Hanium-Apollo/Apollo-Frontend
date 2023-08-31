@@ -5,7 +5,6 @@ export interface CommentListProps {
 }
 
 const CommentList: React.FC<CommentListProps> = ({ ...prop }) => {
-  console.log(prop.comments);
   const listItems = prop.comments.map((item, index) => (
     <Comment
       key={index.toString()}

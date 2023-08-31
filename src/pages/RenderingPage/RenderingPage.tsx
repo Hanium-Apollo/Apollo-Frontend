@@ -18,12 +18,10 @@ function Rendering() {
   const userId = userInfo.id;
   const startDeploy = useCallback(() => {
     if (repoName && type) {
-      console.log("repoName: ", repoName, "is ", type);
       if (type === "client") {
         clientRepoCreateService(userId, repoName)
           .then((response) => {
             console.log("success");
-            console.log(response);
             navigate("/deploy");
           })
           .catch((error) => {
@@ -33,7 +31,6 @@ function Rendering() {
         serverRepoCreateService(userId, repoName)
           .then((response) => {
             console.log("success");
-            console.log(response);
             navigate("/deploy");
           })
           .catch((error) => {

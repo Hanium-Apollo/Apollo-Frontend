@@ -56,7 +56,6 @@ export const PostDetail = (prop: PostDetailProps) => {
   };
   const handleComment = () => {
     const content = inputRef.current?.value;
-    console.log(content);
     if (content) {
       setComment(content);
       window.location.reload();
@@ -64,7 +63,6 @@ export const PostDetail = (prop: PostDetailProps) => {
   };
   const handleDelete = async () => {
     if (userId) {
-      console.log(prop.post.postId);
       await deleteBoard(prop.post.postId, userId);
       navigate("/board");
     }

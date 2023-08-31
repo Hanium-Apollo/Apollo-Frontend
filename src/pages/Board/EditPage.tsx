@@ -61,7 +61,6 @@ export const Edit = () => {
   const handleEditorChange = (newValue: string | undefined) => {
     if (typeof newValue === "string") {
       setValue(newValue);
-      console.log("User input:", newValue); // 콘솔에 사용자 입력값 출력
     }
   };
   const getPost = useCallback(() => {
@@ -69,7 +68,6 @@ export const Edit = () => {
       getBoardDetail(postId).then((res) => {
         setValue(res.data.post.content);
         titleRef.current!.value = res.data.post.title;
-        console.log(res.data);
         tagRef.current!.value = res.data.post.tags
           .map((tag: TagProps) => "#" + tag.tagName)
           .join(" ");

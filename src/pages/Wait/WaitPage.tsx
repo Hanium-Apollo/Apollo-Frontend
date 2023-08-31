@@ -45,7 +45,6 @@ const Wait = () => {
       postUserSignUpService(parsedInfo)
         .then((response) => {
           console.log("success");
-          console.log(response);
           localStorage.removeItem("action");
           localStorage.removeItem("userInfo");
           SetFinish("signup");
@@ -60,7 +59,6 @@ const Wait = () => {
       postUserSignInService(parsedInfo.login, parsedInfo.id)
         .then((response) => {
           console.log("success");
-          console.log(response);
           apiClient.defaults.headers.common[
             "auth"
           ] = `Bearer ${response.data.result.accessToken}`;
@@ -73,7 +71,6 @@ const Wait = () => {
           return response.data;
         })
         .catch((error) => {
-          console.log(error.response.data);
           alert("에러가 발생했습니다: " + error.response);
           navigate("/");
           return error;

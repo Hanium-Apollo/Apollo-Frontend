@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 import { UserInfo } from "../apis/UserServiceType";
@@ -175,7 +175,6 @@ export const MyPage = () => {
           ? githubTokenRef.current.value
           : githubToken,
       };
-      console.log(updatedCredentials.AWSRegion);
       if (userId) {
         await patchCredentials(userId, updatedCredentials);
 

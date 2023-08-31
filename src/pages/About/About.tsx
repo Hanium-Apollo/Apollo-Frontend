@@ -9,16 +9,16 @@ import { Section4 } from "../../components/about/section4";
 const About: React.FC = () => {
   return (
     <MainContainer>
-      <Grid item xs={12}>
+      <Grid item xs={6} md={24}>
         <Section1 children={undefined}></Section1>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6} md={24}>
         <Section2 children={undefined}></Section2>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6} md={24}>
         <Section3 children={undefined}></Section3>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6} md={24}>
         <Section4 children={undefined}></Section4>
       </Grid>
     </MainContainer>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import moment from "moment";
+import { DataProps } from "../../pages/Monitoring/Monitor";
 
 interface DataPoint {
   name: string;
@@ -18,7 +19,7 @@ interface DataPoint {
 
 const MAX_DATA_POINTS = 5;
 
-const BarShapeChart: React.FC = () => {
+const BarShapeChart = (props: DataProps) => {
   const [data, setData] = useState<DataPoint[]>([
     { name: moment().format("HH:mm"), Bytes: Math.floor(Math.random() * 100) },
   ]);

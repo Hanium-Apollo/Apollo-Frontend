@@ -73,7 +73,12 @@ const Comment = (prop: CommentData) => {
         </div>
         {prop.writerId === userId && (
           <div
-            style={{ flex: "1", display: "flex", justifyContent: "flex-end" }}
+            style={{
+              flex: "1",
+              display: "flex",
+              justifyContent: "flex-end",
+              cursor: "pointer",
+            }}
             onClick={Delete}
           >
             삭제하기
