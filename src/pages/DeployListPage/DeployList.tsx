@@ -9,6 +9,7 @@ import {
 } from "../../apis/RepoService";
 import { UserInfo } from "../../apis/UserServiceType";
 import { useCookies } from "react-cookie";
+import cancel from "../../assets/images/cancel.svg";
 
 type deployData = {
   content: string;
@@ -71,20 +72,47 @@ function ListItem({ ...props }: ItemProps) {
           style={{
             position: "absolute",
             display: "flex",
-            alignItems: "center",
+            flexDirection: "column",
             top: "30%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "350px",
             height: "150px",
-            justifyContent: "center",
-            backgroundColor: "white",
-            cursor: "pointer",
+            backgroundColor: "gray",
             zIndex: 10,
+            padding: "10px",
+            borderRadius: "20px",
           }}
         >
-          endpoint: {props.deploy.endpoint}
-          <button onClick={() => handleOpen()}>취소</button>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <img
+              style={{ height: "15px", cursor: "pointer" }}
+              src={cancel}
+              onClick={() => handleOpen()}
+              alt="cancel"
+            />
+          </div>
+          <div
+            style={{
+              width: "100%",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              textAlign: "start",
+              flex: "1",
+              wordBreak: "break-all",
+            }}
+          >
+            endpoint: {props.deploy.endpoint}
+          </div>
         </div>
       )}
       <li
@@ -135,7 +163,6 @@ function NumberList({ deploylist, userId }: ListItemProps) {
 
 function DeployList() {
   const [DeployData, setDeployData] = useState<deployData[]>([]);
-  console.log(DeployData);
   const [cookie] = useCookies(["token"]);
   const info = localStorage.getItem("userInfo");
   const parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
@@ -161,7 +188,6 @@ function DeployList() {
     }
   }, [userId, accessToken]);
 
-  
   useEffect(() => {
     getDeploy();
 

@@ -14,40 +14,16 @@ function Monitor() {
       <div className="chart">
         <Container>
           <Grid container spacing={2}>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={12}>
               <div className="cpu-block">
                 <div className="NameBlock">CPU Utilization</div>
                 <LineShapeChart />
               </div>
             </Grid>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={6} md={12}>
               <div className="log-block">
                 <div className="NameBlock">Log Check</div>
                 <BarShapeChart />
-              </div>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <div className="memory-block">
-                <div className="NameBlock">Memory</div>
-                <LineShapeChart />
-              </div>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <div className="disk-block">
-                <div className="NameBlock">Disk I/O</div>
-                <LineShapeChart />
-              </div>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <div className="networkin-block">
-                <div className="NameBlock">Network In</div>
-                <LineShapeChart />
-              </div>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <div className="networkout-block">
-                <div className="NameBlock">Network Out</div>
-                <LineShapeChart />
               </div>
             </Grid>
           </Grid>
