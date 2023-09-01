@@ -10,7 +10,7 @@ const TagBox = styled.div`
 const TagItem = styled.div`
   text-align: center;
   display: grid;
-  background-color: #4cbccc;
+  background-color: gray;
   border-radius: 10px;
   min-width: 50px;
   overflow: auto;

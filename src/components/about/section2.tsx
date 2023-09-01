@@ -80,8 +80,6 @@ export const Section2: React.FC<Section2Props> = ({ children }) => {
     };
   }, []);
 
-  console.log(scrollY);
-
   return (
     <SectionContainer container xs id="how">
       <Scroll>

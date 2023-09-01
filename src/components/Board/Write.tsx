@@ -74,8 +74,6 @@ export const Write = () => {
       .filter((tag) => tag.trim() !== "");
 
     const content = value;
-    console.log(title, tagNames, content);
-
     if (accessToken && userId && title && tagNames && content) {
       await postBoard(userId, title, content, tagNames);
       navigate("/board");

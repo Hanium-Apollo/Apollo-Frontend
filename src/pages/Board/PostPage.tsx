@@ -32,7 +32,6 @@ export const BoardDetail = () => {
         .then((response) => {
           setPost(response.data.post);
           setComments(response.data.comments);
-          console.log(response.data.comments);
         })
         .catch((error) => {});
     }

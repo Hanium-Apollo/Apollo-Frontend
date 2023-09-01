@@ -13,14 +13,14 @@ const Nav = () => {
 
   let info = localStorage.getItem("userInfo");
   let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
-  let accessToken = cookie.token;
   let userLogin = parsedInfo?.login;
+  let userId = parsedInfo?.id;
   let profile = parsedInfo?.avatar_url;
   const HandleLogout = () => {
     localStorage.removeItem("userInfo");
     removeCookie("token");
 
-    window.location.href = "/";
+    navigate("/");
   };
   const GotoMain = () => {
     navigate("/");
@@ -45,7 +45,7 @@ const Nav = () => {
         <img src={logo} className="navbar_logo" alt="logo" />
       </Link>
       <div className="dropdown">
-        {accessToken && (
+        {userId && cookie.token && (
           <>
             <img
               src={profile}

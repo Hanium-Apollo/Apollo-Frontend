@@ -33,22 +33,23 @@ function ListItem({ ...props }: ItemProps) {
     setOpen(!isopen);
   };
   const handleSubmit = () => {
-    navigate("/monitor", { state: { repoName: props.deploy.stackName } });
+    navigate("/monitor", {
+      state: {
+        repoName: props.deploy.stackName,
+        serviceId: props.deploy.serviceId,
+      },
+    });
   };
   const Delete = async () => {
     if (props.deploy.stackType === "client") {
       await clientRepoDeleteService(props.userId, props.deploy.serviceId)
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
     } else if (props.deploy.stackType === "server") {
       await serverRepoDeleteService(props.userId, props.deploy.serviceId)
-        .then((response) => {
-          console.log(response.data);
-        })
+        .then((response) => {})
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
@@ -179,7 +180,6 @@ function DeployList() {
     if (accessToken && userId) {
       await getDeployListService(userId)
         .then((response) => {
-          console.log(response.data);
           setDeployData(response.data);
         })
         .catch((error) => {

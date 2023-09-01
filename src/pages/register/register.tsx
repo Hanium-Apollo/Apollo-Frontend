@@ -99,11 +99,9 @@ export const Register = () => {
 
     postCredential(userId, credentials)
       .then((response) => {
-        console.log(response);
         notify("회원가입이 완료되었습니다.");
       })
       .catch((error) => {
-        console.log(error.response.data);
         alert("에러가 발생했습니다: " + error.response.data);
       });
   };
@@ -117,7 +115,7 @@ export const Register = () => {
   };
 
   return (
-    <ContainerWrapper>
+    <>
       <StyledToastContainer
         position="top-center"
         limit={1}
@@ -127,128 +125,134 @@ export const Register = () => {
         pauseOnHover
         closeButton={false}
       />
-      <ThemeProvider theme={theme}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 8,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor: "white",
-              borderRadius: "10px",
-              padding: "10px",
-            }}
-          >
-            <Typography component="h1" variant="h5">
-              Register
-            </Typography>
+      <ContainerWrapper>
+        <ThemeProvider theme={theme}>
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
               sx={{
-                mt: 3,
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                backgroundColor: "white",
+                borderRadius: "10px",
+                padding: "10px",
               }}
             >
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    name="awsAccountID"
-                    required
-                    fullWidth
-                    id="awsAccountID"
-                    label="AWS ID"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="region"
-                    label="Region"
-                    id="region"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="accessKey"
-                    label="AWS Access key"
-                    name="accessKey"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    id="secretKey"
-                    label="AWS Secret Key"
-                    name="secrectKey"
-                    type={showPassword ? "text" : "password"}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    onChange={handleSecretKeyChange}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="githubOAuthToken"
-                    label="GithubOAuthToken"
-                    type={showToken ? "text" : "password"}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="password visibility"
-                            onClick={handleClickshowToken}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showToken ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    id="githubOAuthToken"
-                    onChange={handleGithubTokenChange}
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
+              <Typography component="h1" variant="h5">
+                Register
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
                 sx={{
                   mt: 3,
-                  mb: 2,
-                  backgroundColor: "black",
-                  fontSize: "20px",
                 }}
               >
-                회원가입
-              </Button>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      name="awsAccountID"
+                      required
+                      fullWidth
+                      id="awsAccountID"
+                      label="AWS ID"
+                      autoFocus
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="region"
+                      label="Region"
+                      id="region"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      id="accessKey"
+                      label="AWS Access key"
+                      name="accessKey"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      id="secretKey"
+                      label="AWS Secret Key"
+                      name="secrectKey"
+                      type={showPassword ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={handleSecretKeyChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="githubOAuthToken"
+                      label="GithubOAuthToken"
+                      type={showToken ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="password visibility"
+                              onClick={handleClickshowToken}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showToken ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      id="githubOAuthToken"
+                      onChange={handleGithubTokenChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "black",
+                    fontSize: "20px",
+                  }}
+                >
+                  회원가입
+                </Button>
+              </Box>
             </Box>
-          </Box>
-        </Container>
-      </ThemeProvider>
-    </ContainerWrapper>
+          </Container>
+        </ThemeProvider>
+      </ContainerWrapper>
+    </>
   );
 };

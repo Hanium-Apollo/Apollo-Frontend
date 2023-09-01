@@ -44,20 +44,20 @@ const Main = () => {
   const [cookies] = useCookies(["token"]);
 
   const accessToken = cookies.token;
+  let info = localStorage.getItem("userInfo");
+  let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
+  let userId = parsedInfo?.id;
 
   const handleCallback = useCallback(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
     if (code && localStorage.getItem("action")) {
-      console.log(code);
       postAuthenticationService(code)
         .then((res) => {
-          console.log(res);
           localStorage.setItem("userInfo", JSON.stringify(res.data));
           navigate("/wait");
         })
         .catch((err) => {
-          console.log("here");
           console.log(err);
         });
     } else {
@@ -70,21 +70,16 @@ const Main = () => {
   }, [handleCallback]);
 
   const getRepo = useCallback(() => {
-    let info = localStorage.getItem("userInfo");
-    let parsedInfo = info ? (JSON.parse(info) as UserInfo) : null;
-    if (!parsedInfo) return;
-    let userId = parsedInfo.id;
     if (accessToken && userId) {
       getRepoListService(userId)
         .then((response) => {
-          console.log(response.data);
           setRepoData(response.data);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
     }
-  }, [accessToken]);
+  }, [accessToken, userId]);
 
   useEffect(() => {
     getRepo();
@@ -93,7 +88,7 @@ const Main = () => {
   return (
     <div className="main">
       <img src={logoname} className="logoname" alt="logoname" />
-      {accessToken ? (
+      {userId ? (
         <>
           <StyledButton
             variant="contained"

@@ -10,46 +10,25 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import moment from "moment";
+import { DataProps } from "../../pages/Monitoring/Monitor";
 
 interface DataPoint {
   name: string;
-  Bytes: number;
+  Percent: number;
 }
 
-const MAX_DATA_POINTS = 5;
-
-const LineShapeChart: React.FC = () => {
-  const [data, setData] = useState<DataPoint[]>([
-    { name: moment().format("HH:mm"), Bytes: Math.floor(Math.random() * 100) },
-  ]);
+const LineShapeChart = (props: DataProps) => {
+  const [data, setData] = useState<DataPoint[]>([]);
 
   const xAxisRef = useRef<SVGSVGElement>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setData((prevData) => {
-        const newData: DataPoint[] = [
-          ...prevData.slice(-(MAX_DATA_POINTS - 1)),
-          {
-            name: moment().format("HH:mm"),
-            Bytes: Math.floor(Math.random() * 100),
-          },
-        ];
-        return newData;
-      });
-    }, 5000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  const [fontSize, setFontSize] = useState<number>(0);
 
   useEffect(() => {
     const handleResize = () => {
       if (xAxisRef.current) {
         const chartWidth = xAxisRef.current.getBoundingClientRect().width;
         const calculatedFontSize = chartWidth * 0.01; // 차트 너비의 1%를 폰트 크기로 설정
-        xAxisRef.current.style.fontSize = `${calculatedFontSize}px`;
+        setFontSize(calculatedFontSize);
       }
     };
 
@@ -61,23 +40,40 @@ const LineShapeChart: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // props.values가 변경될 때마다 데이터 업데이트
+    console.log("Props: ", props.timestamps, props.values);
+    if (props.timestamps) {
+      const newData = props.timestamps.map((timestamp, index) => ({
+        name: moment(timestamp).format("HH:mm"),
+        Percent: props.values[index],
+      }));
+      setData(newData);
+    }
+  }, [props.timestamps, props.values]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <div className="chart-container">
       <ResponsiveContainer>
         <LineChart data={data}>
-          <XAxis dataKey="name" ref={xAxisRef} tick={{ dy: 8 }} />
+          <XAxis dataKey="name" tick={{ dy: 8 }} reversed={true} />
           <YAxis tick={{ dy: 8 }} />
           <CartesianGrid strokeDasharray="3 3" />
           <Tooltip />
           <Legend />
           <Line
             type="linear"
-            dataKey="Bytes"
+            dataKey="Percent"
             stroke="rgba(75,192,192,1)"
             strokeWidth={1}
           />
         </LineChart>
       </ResponsiveContainer>
+      <style>{`.recharts-x-axis { font-size: ${fontSize}px; }`}</style>
     </div>
   );
 };
