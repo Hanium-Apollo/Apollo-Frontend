@@ -45,7 +45,7 @@ const Nav = () => {
         <img src={logo} className="navbar_logo" alt="logo" />
       </Link>
       <div className="dropdown">
-        {userId && (
+        {userId && cookie.token && (
           <>
             <img
               src={profile}

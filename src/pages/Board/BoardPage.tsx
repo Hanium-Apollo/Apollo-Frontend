@@ -51,7 +51,7 @@ const BottomButton = styled.div`
 const Btn = styled(Button)`
   color: whitesmoke;
   cursor: pointer;
-  background-color: #4cbccc;
+  background-color: gray;
   width: 100px;
   height: 40px;
   font-size: 18px;
@@ -65,12 +65,12 @@ const TabContainer = styled.div`
   background-color: #151515;
   z-index: 5;
   border-radius: 20px 20px 0px 0px;
-  border-bottom: 2px solid #4cbccc;
+  border-bottom: 2px solid gray;
 `;
 
 const TabMenu = styled.ul`
   background-color: transparent;
-  color: rgb(232, 234, 237);
+  color: gray;
   font-weight: bold;
   display: flex;
   flex-direction: row;
@@ -93,7 +93,7 @@ const TabMenu = styled.ul`
   .focused {
     font-size: 18px;
     font-weight: bold;
-    color: #4cbccc;
+    color: white;
   }
 
   & div.desc {
@@ -125,7 +125,7 @@ const TagBox = styled.div`
 const TagItem = styled.div`
   text-align: center;
   display: grid;
-  background-color: #4cbccc;
+  background-color: gray;
   border-radius: 10px;
   min-width: 50px;
   overflow: auto;
