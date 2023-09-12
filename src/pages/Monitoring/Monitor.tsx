@@ -7,6 +7,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { UserInfo } from "../../apis/UserServiceType";
 import React from "react";
+import { StyledToastContainer } from "../Wait/WaitPage";
+import { FadeLoader } from "react-spinners";
 
 export interface DataProps {
   id: string;
@@ -56,53 +58,100 @@ const Monitor = () => {
   }, [Data]);
 
   return (
-    <div className="monitor">
-      <div className="text-block">
-        <div className="text">{repoName}</div>
-      </div>
-      <div className="chart">
-        {Data.length > 0 && (
-          <Container>
-            <Grid container spacing={2}>
-              <Grid item xs={6} md={12}>
-                <div className="Data-block">
-                  {Data[0].label && (
-                    <>
-                      <div className="NameBlock">{Data[0].label}</div>
-                      <LineShapeChart
-                        id={Data[0].id}
-                        label={Data[0].label}
-                        timestamps={Data[0].timestamps}
-                        values={Data[0].values}
-                      />
-                    </>
-                  )}
-                </div>
+    <>
+      {Data.length > 0 ? (
+        <div className="monitor">
+          <div className="text-block">
+            <div className="text">{repoName}</div>
+          </div>
+          <div className="chart">
+            <Container>
+              <Grid container spacing={2}>
+                <Grid item xs={6} md={12}>
+                  <div className="Data-block">
+                    {Data[0].label && (
+                      <>
+                        <div className="NameBlock">{Data[0].label}</div>
+                        <LineShapeChart
+                          id={Data[0].id}
+                          label={Data[0].label}
+                          timestamps={Data[0].timestamps}
+                          values={Data[0].values}
+                        />
+                      </>
+                    )}
+                  </div>
+                </Grid>
+                <Grid item xs={6} md={12}>
+                  <div className="Data-block">
+                    {Data[1].label && (
+                      <>
+                        <div className="NameBlock">{Data[1].label}</div>
+                        <LineShapeChart
+                          id={Data[1].id}
+                          label={Data[1].label}
+                          timestamps={Data[1].timestamps}
+                          values={Data[1].values}
+                        />
+                      </>
+                    )}
+                  </div>
+                </Grid>
               </Grid>
-              <Grid item xs={6} md={12}>
-                <div className="Data-block">
-                  {Data[1].label && (
-                    <>
-                      <div className="NameBlock">{Data[1].label}</div>
-                      <LineShapeChart
-                        id={Data[1].id}
-                        label={Data[1].label}
-                        timestamps={Data[1].timestamps}
-                        values={Data[1].values}
-                      />
-                    </>
-                  )}
-                </div>
-              </Grid>
-            </Grid>
-          </Container>
-        )}
-      </div>
-      <div>
-        <Button css={"mhomebtn"} text={"home"} />
-        <Button css={"mbackbtn"} text={"back"} />
-      </div>
-    </div>
+            </Container>
+          </div>
+          <div>
+            <Button css={"mhomebtn"} text={"home"} />
+            <Button css={"mbackbtn"} text={"back"} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div
+            style={{
+              width: "100%",
+              position: "absolute",
+              top: "20%",
+              color: "white",
+              fontSize: "40px",
+            }}
+          >
+            잠시만 기다려주세요
+          </div>
+          <StyledToastContainer
+            position="top-center"
+            limit={1}
+            closeOnClick
+            autoClose={3000}
+            hideProgressBar
+            pauseOnHover
+            closeButton={false}
+          />
+          <div className="contentWrap">
+            <div
+              style={{
+                position: "fixed",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <FadeLoader
+                color="white"
+                height={15}
+                width={5}
+                radius={2}
+                margin={2}
+              />
+            </div>
+          </div>
+          <div style={{ width: "100%", position: "absolute", bottom: "10%" }}>
+            <Button css={"mhomebtn"} text={"home"} />
+            <Button css={"mbackbtn"} text={"back"} />
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

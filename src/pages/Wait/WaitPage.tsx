@@ -90,7 +90,7 @@ const Wait = () => {
     } else if (isFinish === "signin") {
       notify("로그인이 완료되었습니다.");
     }
-  }, [isFinish, navigate, parsedInfo]);
+  }, [isFinish, navigate, parsedInfo, handleLogin]);
 
   return (
     <>
