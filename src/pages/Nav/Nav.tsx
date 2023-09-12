@@ -23,7 +23,7 @@ const Nav = () => {
     navigate("/");
   };
   const GotoMain = () => {
-    navigate("/"); // Navigate to another route
+    navigate("/");
   };
 
   const GotoDeployList = () => {

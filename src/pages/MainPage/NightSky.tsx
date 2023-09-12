@@ -13,7 +13,7 @@ function NightSky() {
     let height = container.clientHeight;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x333333); // 배경색을 검은색으로 설정
+    scene.background = new THREE.Color(0x333333);
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.z = 5;
 
@@ -26,7 +26,7 @@ function NightSky() {
       size: 0.005,
     }); // 조정된 크기
 
-    const starsPositions = new Float32Array(1000 * 3); // x, y, z positions for each star
+    const starsPositions = new Float32Array(1000 * 3); 
 
     for (let i = 0; i < 2000; i++) {
       const i3 = i * 3;

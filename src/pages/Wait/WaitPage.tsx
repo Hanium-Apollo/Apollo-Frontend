@@ -31,7 +31,7 @@ const Wait = () => {
   const [isFinish, SetFinish] = useState("");
   const [parsedInfo, SetParsedInfo] = useState<UserInfo | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookies, setCookie] = useCookies(["token"]); // cookies와 setCookie 추가
+  const [cookies, setCookie] = useCookies(["token"]);
 
   useEffect(() => {
     const info = localStorage.getItem("userInfo");
